@@ -1,14 +1,15 @@
 import React from "react";
 import { Outlet } from "react-router-dom";
 import "./AppLayout.css";
+import Header from "./Header";
 
 const AppLayout = () => {
-    return (
-        <>
-            <div>AppLayout</div>
-            <Outlet />
-        </>
-    );
+  return (
+    <>
+      <Header />
+      <Outlet />
+    </>
+  );
 };
 
 export default AppLayout;
