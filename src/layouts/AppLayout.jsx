@@ -5,7 +5,7 @@ import "./AppLayout.css";
 const AppLayout = () => {
     return (
         <>
-            <div>AppLayout</div>
+            {/* <div>AppLayout</div> */}
             <Outlet />
         </>
     );
