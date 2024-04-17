@@ -1,5 +1,8 @@
 import React,{useState} from "react";
 import "./SideBar.css";
+import sidebarMainImg from "../../assets/images/sidebar-main-img.svg";
+import leftArrow from "../../assets/images/left-arrow.svg"
+
 
 const SideBar =()=>{
     // -----------사이드바 함수------------
@@ -15,11 +18,13 @@ const SideBar =()=>{
         <div className="sidebar-wrapper">
             <div className="sidebar-wrapper-area">
                 <h1 className="sidebar-title">열차타요</h1>
-                <img src="..\asset\img\sidebar-main-images.png" alt="메인이미지" />
+                <div className="sidebar-img-area">
+                    <img src={sidebarMainImg} alt="메인이미지" />
+                </div>
             </div>
         </div>
         <div className="close-slider-btn" onClick={ShowSidebar}>
-            <img className={`sidebar-arrow ${transArrow ? "left" : "right"}`} src="../asset/img/left-arrow.svg" alt="오른쪽 화살표" />
+            <img className={`sidebar-arrow ${transArrow ? "left" : "right"}`} src={leftArrow} alt="왼쪽 화살표" />
         </div>
     </div>)
 }
