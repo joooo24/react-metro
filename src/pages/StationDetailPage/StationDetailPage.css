@@ -1,4 +1,4 @@
-.staion-detail-page {
+.station-detail-page {
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
@@ -17,7 +17,7 @@
     background-color: #f1f1f1;
 }
 
-.station-infomation {
+.station-information {
     width: 100%;
 }
 
@@ -44,10 +44,12 @@
     margin-bottom: 30px;
 }
 
-.arr-start-end li {}
+.arr-start-end li:first-child {
+    margin-right: 30px;
+}
 
 .arr-start-end .tit {
-    margin-right: 20px;
+    margin-right: 10px;
     font-weight: bold;
 }
 
@@ -127,15 +129,19 @@
 }
 
 @media (max-width: 1280px) {
-    .staion-detail-page {
+    .station-detail-page {
         padding: 0 16px;
     }
 
 }
 
 @media (max-width: 768px) {
-    .staion-detail-page {
+    .station-detail-page {
         flex-direction: column;
+    }
+
+    .map-wrap {
+        height: 360px;
     }
 
 }
