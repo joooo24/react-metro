@@ -4,12 +4,12 @@ import "./AppLayout.css";
 import Header from "./component/Header";
 
 const AppLayout = () => {
-  return (
-    <>
-      <Header />
-      <Outlet />
-    </>
-  );
+    return (
+        <>
+            <Header />
+            <Outlet />
+        </>
+    );
 };
 
 export default AppLayout;
