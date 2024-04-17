@@ -6,8 +6,7 @@ const SideBar =()=>{
     const [sideBar, setSideBar] = useState(true);
     const [transArrow, setTransArrow] = useState(true);
     const ShowSidebar=()=>{
-        console.log("sidebar", sideBar)
-        setTransArrow(false)
+        setTransArrow((prevState)=>!prevState)
         setSideBar(!sideBar);
     }
 
@@ -20,7 +19,7 @@ const SideBar =()=>{
             </div>
         </div>
         <div className="close-slider-btn" onClick={ShowSidebar}>
-            <i className={`xi-angle-${transArrow ?"left":"right"}`}></i>
+            <img className={`sidebar-arrow ${transArrow ? "left" : "right"}`} src="../asset/img/left-arrow.svg" alt="오른쪽 화살표" />
         </div>
     </div>)
 }
