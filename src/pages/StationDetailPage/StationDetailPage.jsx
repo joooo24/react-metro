@@ -1,15 +1,45 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { Alert } from "react-bootstrap";
+import { useStationAddressQuery } from "../../hooks/useStationAddress";
 import "./StationDetailPage.css";
 
 const StationDetailPage = () => {
+    const [currentStation, setCurrentStation] = useState("");
+
+    const [stationAddress, setStationAddress] = useState({});
+
+    const {
+        data: addressData,
+        isLoading,
+        isError,
+        error,
+    } = useStationAddressQuery({ startIdx: 1, endIdx: 300 });
+
+    useEffect(() => {
+        setCurrentStation("시청");
+        if (!isLoading && !isError) {
+            const foundStation = addressData?.find(
+                (station) => station.STATN_NM === currentStation
+            );
+            setStationAddress(foundStation || {});
+        }
+    }, [isLoading, isError, addressData, currentStation]);
+
+    if (isLoading) {
+        return <div>정보를 받아오는 중입니다</div>;
+    }
+
+    if (isError) {
+        return <Alert variant="danger">{error.message}</Alert>;
+    }
+
     return (
-        <div className="staion-detail-page">
+        <div className="station-detail-page">
             <div className="map-wrap">지도</div>
-            <div className="station-infomation">
+            <div className="station-information">
                 <div className="station-list">
                     <div className="station-name">역 이름</div>
-                    <div className="station-name">역 이름</div>
-                    <div className="station-name">역 이름</div>
+                    <div className="station-name">{currentStation}</div>
                 </div>
                 <ul className="arr-start-end">
                     <li>
@@ -25,7 +55,7 @@ const StationDetailPage = () => {
                 <ul className="arr-real-time">
                     <li>
                         <span className="tit">당 역</span>
-                        <span className="station">강남역</span>
+                        <span className="station">{currentStation}</span>
                         <span className="status">도착</span>
                     </li>
                     <li>
@@ -39,16 +69,22 @@ const StationDetailPage = () => {
                         <span className="status">접근</span>
                     </li>
                 </ul>
-                <div className="station-address">
-                    <h4>주소</h4>
-                    <p>서울시 강남구 테헤란로 지하 340</p>
-                    <p>
-                        <tel>02-6110-2201</tel> <b>대표번호</b>
-                    </p>
-                    <p>
-                        <tel>02-6110-1122</tel> <b>유실물센터</b>
-                    </p>
-                </div>
+                {stationAddress && (
+                    <div className="station-address">
+                        <h4>주소</h4>
+                        <p>
+                            {stationAddress.ADRES}
+                            <br />
+                            {stationAddress.RDNMADR}
+                        </p>
+                        <p>
+                            {stationAddress.TELNO} <b>대표번호</b>
+                        </p>
+                        <p>
+                            02-6110-1122 <b>유실물센터</b>
+                        </p>
+                    </div>
+                )}
             </div>
         </div>
     );
