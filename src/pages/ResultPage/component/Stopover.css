@@ -1,0 +1,19 @@
+.stopover h1 {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+.stopover h2 {
+    font-size: 18px;
+    font-weight: bold;
+    color: red;
+}
+.stopover div {
+    display: flex;
+    gap: 5px;
+}
+.stopover div h3 {
+    width: 160px;
+    font-size: 18px;
+    color: blue;
+}

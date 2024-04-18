@@ -73,7 +73,10 @@ const Header = () => {
                             <p>로그인</p>
                         </div>
                         {/* --------- 서치바 --------- */}
-                        <form className="header-search" onSubmit={searchByKeyword}>
+                        <form
+                            className="header-search"
+                            onSubmit={searchByKeyword}
+                        >
                             <img src={search} alt="search" />
                             <input
                                 type="text"
