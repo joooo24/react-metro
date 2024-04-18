@@ -52,7 +52,7 @@ textarea:active {
   margin-bottom: 26px;
 }
 
-.search-input div input:first-child {
+.search-input div input {
     width: 320px;
     height: 60px;
     font-weight: 500;
@@ -69,13 +69,14 @@ textarea:active {
     margin-right: 10px;
 }
 
-.search-input div input:last-child {
+.search-input div select {
+  color: #909090;
   width: 180px;
   font-weight: 500;
   border-radius: 30px;
   border:2px solid #EAEAEA;
   font-size: 20px;
-  padding: 18px 48px;
+  padding: 0 18px;
   outline: none;
   cursor: pointer;
 }

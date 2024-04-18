@@ -4,26 +4,27 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const SearchForm = () => {
-    const [inputs, setInputs] = useState({
-        depart:'',
-        arrive:'',
-        departLine: '',
-        arriveLine: '',
+  const [dropdown, setDropdwon] = useState(false);
+  const [inputs, setInputs] = useState({
+      depart:'',
+      arrive:'',
+      departLine: '',
+      arriveLine: '',
     });
-    const {depart, arrive, departLine, arriveLine} = inputs;
-    const navigate = useNavigate();
+  const {depart, arrive, departLine, arriveLine} = inputs;
+  const navigate = useNavigate();
 
-    const onChange = (e) => {
-        const { name, value } = e.target;
-        setInputs({...inputs, [name]: value});
-    }
+  const onChange = (e) => {
+      const { name, value } = e.target;
+      setInputs({...inputs, [name]: value});
+  }
 
-    const searchSubway = (e) => {
-        e.preventDefault();
-        //inputs 객체의 각 키와 값을 반복하여 URL 쿼리 문자열로 구성
-        const queryStringParams = Object.keys(inputs).map(key => `${encodeURIComponent(key)}=${encodeURIComponent(inputs[key])}`).join('&');
-        navigate(`/arrival-result?${queryStringParams}`);
-    }
+  const searchSubway = (e) => {
+      e.preventDefault();
+      //inputs 객체의 각 키와 값을 반복하여 URL 쿼리 문자열로 구성
+      const queryStringParams = Object.keys(inputs).map(key => `${encodeURIComponent(key)}=${encodeURIComponent(inputs[key])}`).join('&');
+      navigate(`/arrival-result?${queryStringParams}`);
+  }
 
   return (
     <div className='main-search-form'>
@@ -39,14 +40,17 @@ const SearchForm = () => {
             value={depart}
             onChange={onChange}
           />
-          <input
-            type='text'
-            placeholder='ex)2호선'
+          <select
             required
             name='departLine'
             value={departLine}
             onChange={onChange}
-          />
+          >
+            <option value="">ex) 2호선</option>
+            {[...Array(8)].map((_, index) => (
+              <option key={index + 1} value={`${index + 1}호선`}>{`${index + 1}호선`}</option>
+            ))}
+          </select>
         </div>
         <div>
           <input
@@ -57,14 +61,17 @@ const SearchForm = () => {
             value={arrive}
             onChange={onChange}
           />
-          <input
-            type='text'
-            placeholder='ex)2호선'
+          <select
             required
             name='arriveLine'
             value={arriveLine}
             onChange={onChange}
-          />
+          >
+            <option value="">ex) 2호선</option>
+            {[...Array(8)].map((_, index) => (
+              <option key={index + 1} value={`${index + 1}호선`}>{`${index + 1}호선`}</option>
+            ))}
+          </select>
         </div>
         <button type='submit'>길찾기</button>
       </form>
