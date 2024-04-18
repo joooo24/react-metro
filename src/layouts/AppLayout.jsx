@@ -2,11 +2,12 @@ import React from "react";
 import { Outlet } from "react-router-dom";
 import "./AppLayout.css";
 import Footer from './component/Footer/Footer';
+import Header from "./component/Header";
 
 const AppLayout = () => {
     return (
         <>
-            <div>AppLayout</div>
+            <Header />
             <Outlet />
             <Footer />
         </>
