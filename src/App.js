@@ -8,8 +8,6 @@ import StationDetailPage from "./pages/StationDetailPage/StationDetailPage";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
-// MainPage -> /
-// ResultPage -> /result
 function App() {
     return (
         <Routes>
