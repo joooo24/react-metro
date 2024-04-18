@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Alert } from "react-bootstrap";
 import { useStationAddressQuery } from "../../hooks/useStationAddress";
 import "./StationDetailPage.css";
+import FullTimetable from './component/FullTimetable/FullTimetable';
 
 const StationDetailPage = () => {
     const [currentStation, setCurrentStation] = useState("");
@@ -49,6 +50,9 @@ const StationDetailPage = () => {
                     <li>
                         <span className="tit">막차</span>
                         <span className="time">04:00</span>
+                    </li>
+                    <li>
+                        <FullTimetable />
                     </li>
                 </ul>
                 <button className="btn-show-station">지하철 노선도 보기</button>
