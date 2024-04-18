@@ -7,15 +7,15 @@ import star from "../../assets/images/star.svg";
 import { Link, useNavigate } from "react-router-dom";
 
 const Header = () => {
-    const [keyword, setKeyword] = useState("");
+    const [station, setStation] = useState("");
     const [istoggle, setToggle] = useState(false);
     const navigate = useNavigate();
 
     // ---------- 검색 키워드 ----------
     const searchByKeyword = (e) => {
         e.preventDefault();
-        navigate(`/q=${keyword}`);
-        setKeyword("");
+        navigate(`/station-detail?q=${station}`);
+        setStation("");
     };
     // ---------- 모바일 토글 버튼 ----------
     const isToggleOpen = () => {
@@ -35,6 +35,8 @@ const Header = () => {
                         <input
                             type="text"
                             placeholder="찾으시는 역이 있으신가요?"
+                            value={station}
+                            onChange={(e) => setStation(e.target.value)}
                         />
                     </form>
                     {/* --------- 즐겨찾기 --------- */}
@@ -71,14 +73,13 @@ const Header = () => {
                             <p>로그인</p>
                         </div>
                         {/* --------- 서치바 --------- */}
-                        <form
-                            className="header-search"
-                            onSubmit={searchByKeyword}
-                        >
+                        <form className="header-search" onSubmit={searchByKeyword}>
                             <img src={search} alt="search" />
                             <input
                                 type="text"
                                 placeholder="찾으시는 역이 있으신가요?"
+                                value={station}
+                                onChange={(e) => setStation(e.target.value)}
                             />
                         </form>
                         <div>
