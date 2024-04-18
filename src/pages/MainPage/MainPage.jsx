@@ -5,9 +5,11 @@ import SideBar from "../../components/SideBar/SideBar";
 
 const MainPage = () => {
     return (
-        <div className="search-form">
-            <SearchForm />
+        <div className="main-page">
             <SideBar />
+            <div className="search-form">
+                <SearchForm />
+            </div>
         </div>
     );
 };
