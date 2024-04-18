@@ -1,6 +1,5 @@
 import React from 'react';
 import './SearchForm.css';
-import '../../../../assets/image/search.svg';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -23,7 +22,7 @@ const SearchForm = () => {
         e.preventDefault();
         //inputs 객체의 각 키와 값을 반복하여 URL 쿼리 문자열로 구성
         const queryStringParams = Object.keys(inputs).map(key => `${encodeURIComponent(key)}=${encodeURIComponent(inputs[key])}`).join('&');
-        navigate(`/result?${queryStringParams}`);
+        navigate(`/arrival-result?${queryStringParams}`);
     }
 
   return (
