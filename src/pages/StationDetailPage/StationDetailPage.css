@@ -56,6 +56,12 @@
 
 .arr-start-end .time {}
 
+/* Full-Timetable */
+.arr-start-end li:last-child {
+    margin-left: 20px;
+    cursor: pointer;
+}
+
 .btn-show-station {
     width: 100%;
     height: 55px;

@@ -1,0 +1,96 @@
+button {
+    background-color: transparent;
+    border: none;
+    font-weight: 700;
+    color: #909090;
+}
+
+button:hover {
+    color: black;
+}
+
+.modal-open-button, .modal-close-btn {
+    cursor: pointer;
+    margin-left: auto;
+}
+
+.modal-close-btn {
+    font-size: 30px;
+}
+
+.modal-container {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.content {
+    background-color: #ffffff;
+    width: 30%;
+    height: 70%;
+    /* overflow-y: auto; */
+}
+
+.full-timetable-title {
+    background-color: #ffffff;
+    text-align: center;
+    font-size: 30px;
+    border-bottom: 1.5px solid #909090;
+    padding-bottom: 15px;
+}
+
+.full-timetable-date {
+    padding: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #ebebeb;
+    border-bottom: 1px solid #909090;
+
+}
+
+.full-timetable-date div {
+    margin-right: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+table, th, td {
+    border: 0.5px solid #909090 !important;
+}
+
+th {
+    width: 50%;
+    padding: 10px 0 !important;
+}
+
+td {
+    width: 50%;
+    padding: 15px 0 !important;
+}
+
+table thead, table tbody tr {
+    display: table;
+    width: 100%;
+  }
+
+.full-timetable {
+    background-color: #ffffff;
+    width: 100%;
+    height: auto;
+    text-align: center;
+}
+tbody {
+    display: block;
+    width: 100%;
+    max-height: 520px;
+    overflow-y: scroll;
+}
