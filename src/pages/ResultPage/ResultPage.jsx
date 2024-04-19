@@ -8,6 +8,7 @@ import DepartureArrivalTime from "./component/DepartureArrivalTime/DepartureArri
 import { useStationPositionQuery } from "../../hooks/useStationPosition";
 import { useRealtimePositionQuery } from '../../hooks/useRealtimePosition'
 import { calTime } from "../../utils/calTime";
+import ReportForm from "./component/ReportForm/ReportForm";
 
 const startIdx = 0
 const endIdx = 50
@@ -22,6 +23,7 @@ const ResultPage = () => {
     const [statnLat, setStatnLat] = useState()
     const [statnLng, setStatnLng] = useState()
     const [departTime, setDepartTime] = useState("")
+    const [showReport, isShowReport] = useState(false)
 
     const { data: statnPosDB } = useStationPositionQuery()
     //실시간 도착 
@@ -47,6 +49,10 @@ const ResultPage = () => {
         return result
     }
 
+    const handleShowReport = () => {
+        isShowReport(!showReport)
+    }
+
     return (
         <div className="station-result-page">
             <div className="result-map-wrap">
@@ -57,6 +63,13 @@ const ResultPage = () => {
                 <DepartureArrivalTime departTime={departTime} />
                 <div>
                     경유지
+                </div>
+                <div onClick={() => handleShowReport()}> --잘못된 정보 신고-- </div>
+            </div>
+            <div className={`report-form-wrap ${showReport ? "visible" : ""}`}>
+                <div className="report-form-content">
+                    <ReportForm />
+                    <div onClick={handleShowReport}>--되돌아가기--</div>
                 </div>
             </div>
         </div>

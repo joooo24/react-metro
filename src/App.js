@@ -7,6 +7,7 @@ import ResultPage from "./pages/ResultPage/ResultPage";
 import StationDetailPage from "./pages/StationDetailPage/StationDetailPage";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
+import AdminPage from "./pages/AdminPage/AdminPage";
 
 function App() {
     return (
@@ -15,6 +16,7 @@ function App() {
                 <Route index element={<MainPage />} />
                 <Route path="arrival-result" element={<ResultPage />} />
                 <Route path="station-detail" element={<StationDetailPage />} />
+                <Route path="admin" element={<AdminPage />} />
             </Route>
             <Route path="*" element={<NotFoundPage />} />
         </Routes>
