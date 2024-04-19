@@ -1,0 +1,23 @@
+.station-result-page {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 150px 0 80px;
+}
+
+.result-map-wrap {
+    width: 100%;
+    height: 580px;
+    /* max-height: 600px; */
+    margin-right: 20px;
+    border-radius: 20px;
+    overflow: hidden;
+    background-color: #f1f1f1;
+}
+
+.navigate-result-information {
+    width: 100%;
+}

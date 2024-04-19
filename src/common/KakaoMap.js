@@ -9,8 +9,8 @@ const KakaoMap = ({ statnLat, statnLng }) => {
                 <Map Map
                     center={{ lat: statnLat, lng: statnLng }}
                     style={{
-                        width: '330px',
-                        height: '620px',
+                        width: '100%',
+                        height: '580px',
                         borderRadius: '20px',
                         border: '1px solid gray'
                     }}
