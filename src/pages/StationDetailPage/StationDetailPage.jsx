@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Alert } from "react-bootstrap";
 import { useStationAddressQuery } from "../../hooks/useStationAddress";
 import "./StationDetailPage.css";
 
 const StationDetailPage = () => {
-    const [currentStation, setCurrentStation] = useState("");
+    const [query, setQuery] = useSearchParams();
+    const currentStation = query.get("q");
+    console.log("currentStation", currentStation);
 
     const [stationAddress, setStationAddress] = useState({});
 
@@ -16,7 +19,6 @@ const StationDetailPage = () => {
     } = useStationAddressQuery({ startIdx: 1, endIdx: 300 });
 
     useEffect(() => {
-        setCurrentStation("시청");
         if (!isLoading && !isError) {
             const foundStation = addressData?.find(
                 (station) => station.STATN_NM === currentStation
