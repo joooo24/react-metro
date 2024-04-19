@@ -8,7 +8,7 @@
     flex-flow: row;
     justify-content: space-between;
     transition: all 1.2s;
-    z-index: 1;
+    z-index: 88;
 }
 .sidebar.closed{
     margin-left: -75%;

@@ -1,0 +1,23 @@
+
+.login{
+    width: 100%;
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+    padding: 100px 0;
+}
+
+.login-wrapper{
+    width: 60%;
+    height: 100%;
+}
+
+.login-logo-area{
+    display: flex;
+    flex-flow: column;
+    align-items: center;
+}
+
+.login-form{
+    margin-top: 50px;
+}
