@@ -1,42 +1,46 @@
 import { useState, useEffect } from "react";
 import "./ResultPage.css";
 import { useSearchParams } from "react-router-dom";
-import KakaoMap from '../../common/KakaoMap'
+import Stopover from "./component/Stopover";
+import KakaoMap from "../../common/KakaoMap";
 import axios from "axios";
 
 const ResultPage = () => {
-    const [query, setQuery] = useSearchParams()
-    const departStatnNm = query.get("depart").replace(/역$/, '');
-    const arriveStatnNm = query.get("arrive").replace(/역$/, '');
-    const departLine = query.get("departLine").replace(/호선$/, '');
-    const arriveLine = query.get("arriveLine").replace(/호선$/, '');
+    const [query, setQuery] = useSearchParams();
+    const departStatnNm = query.get("depart").replace(/역$/, "");
+    const arriveStatnNm = query.get("arrive").replace(/역$/, "");
+    const departLine = query.get("departLine").replace(/호선$/, "");
+    const arriveLine = query.get("arriveLine").replace(/호선$/, "");
 
-    const [statnPositionList, setStatnPositionList] = useState([])
-    const [statnLat, setStatnLat] = useState()
-    const [statnLng, setStatnLng] = useState()
+    const [statnPositionList, setStatnPositionList] = useState([]);
+    const [statnLat, setStatnLat] = useState();
+    const [statnLng, setStatnLng] = useState();
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/stations/')
-                setStatnPositionList(response.data)
+                const response = await axios.get(
+                    "http://localhost:5000/stations/"
+                );
+                setStatnPositionList(response.data);
             } catch (error) {
-                console.error('Error fetching data: ', error)
+                console.error("Error fetching data: ", error);
             }
-        }
-        fetchData()
-    }, [])
+        };
+        fetchData();
+    }, []);
 
     useEffect(() => {
         if (statnPositionList.length > 0) {
-            const statnPosition = statnPositionList.find(station => station.StatnNm === departStatnNm)
+            const statnPosition = statnPositionList.find(
+                (station) => station.StatnNm === departStatnNm
+            );
             if (statnPosition) {
-                setStatnLat(statnPosition.lat)
-                setStatnLng(statnPosition.lng)
+                setStatnLat(statnPosition.lat);
+                setStatnLng(statnPosition.lng);
             }
         }
-
-    }, [statnPositionList])
+    }, [statnPositionList]);
 
     return (
         <div className="station-result-page">
@@ -46,12 +50,16 @@ const ResultPage = () => {
             <div className="navigate-result-information">
                 <div>소요시간</div>
                 <div>출발/도착시간</div>
-                <div>경유지</div>
+                <Stopover
+                    depart={departStatnNm}
+                    arrive={arriveStatnNm}
+                    departLine={departLine}
+                    arriveLine={arriveLine}
+                />
             </div>
         </div>
-    )
+    );
 };
-
 
 // return (
 //     <div className="station-detail-page">

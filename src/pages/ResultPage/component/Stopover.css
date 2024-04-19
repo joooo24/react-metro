@@ -1,0 +1,202 @@
+.stopover-wrapper {
+    width: 620px;
+    height: 440px;
+    padding: 50px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 10px;
+    border-radius: 20px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
+}
+
+/* 출발역 부분 */
+.stopover-start-station {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 10px;
+}
+.stopover-start-station p {
+    font-size: 20px;
+    color: #909090;
+}
+.stopover-start-station h2 {
+    width: 50px;
+    height: 50px;
+    font: bold 36px/45px "Noto Sans KR", sans-serif;
+    text-align: center;
+    border-radius: 100%;
+    color: #fff;
+    /* 호선마다 변경 예정 */
+    background: #fff;
+}
+
+.stopover-start-station h3 {
+    font-size: 32px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* 경유역 부분 */
+.stopover-over-station {
+    width: 520px;
+    height: 250px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    margin: 10px 0;
+}
+.stopover-over-station span:nth-child(1) {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 180px;
+    border-right: 5px dotted #909090;
+    margin-right: 30px;
+}
+.stopover-over-station span:nth-child(2) {
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 1000px;
+    height: 180px;
+    overflow: auto;
+}
+.stopover-over-station span:nth-child(2)::-webkit-scrollbar {
+    width: 5px;
+    background: #000;
+    height: 100px;
+}
+.stopover-over-station span:nth-child(2)::-webkit-scrollbar-thumb {
+    background: gray;
+}
+.stopover-over-station span:nth-child(2)::-webkit-scrollbar-track {
+    background: gainsboro;
+}
+.stopover-over-station span:nth-child(2) h3 {
+    cursor: pointer;
+}
+.over-station-first {
+    display: flex;
+    gap: 10px;
+}
+.over-station-second {
+    display: flex;
+    gap: 10px;
+}
+/* 환승역 */
+.transfer-station {
+    font-size: 20px;
+    font-weight: bold;
+    margin: 5px 0;
+}
+
+/* 도착역 부분 */
+.stopover-end-station {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    gap: 10px;
+}
+.stopover-end-station p {
+    font-size: 20px;
+    color: #909090;
+}
+.stopover-end-station h2 {
+    width: 50px;
+    height: 50px;
+    font: bold 36px/45px "Noto Sans KR", sans-serif;
+    text-align: center;
+    border-radius: 100%;
+    color: #fff;
+    /* 호선마다 변경 예정 */
+    background: #fff;
+}
+.stopover-end-station h3 {
+    font-size: 32px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* 각각의 호선 컬러 정리 */
+/* 출발/도착역 */
+.stopover-start-station.line-1 h2,
+.stopover-end-station.line-1 h2 {
+    background: #015eaa;
+}
+.stopover-start-station.line-2 h2,
+.stopover-end-station.line-2 h2 {
+    background: #1cb25a;
+}
+.stopover-start-station.line-3 h2,
+.stopover-end-station.line-3 h2 {
+    background: #f67c30;
+}
+.stopover-start-station.line-4 h2,
+.stopover-end-station.line-4 h2 {
+    background: #01a9e9;
+}
+.stopover-start-station.line-5 h2,
+.stopover-end-station.line-5 h2 {
+    background: #9c60a9;
+}
+.stopover-start-station.line-6 h2,
+.stopover-end-station.line-6 h2 {
+    background: #c67535;
+}
+.stopover-start-station.line-7 h2,
+.stopover-end-station.line-7 h2 {
+    background: #667515;
+}
+.stopover-start-station.line-8 h2,
+.stopover-end-station.line-8 h2 {
+    background: #e92470;
+}
+
+/* 경유역 */
+.over-station-first.line-1 h3,
+.over-station-second.line-1 h3,
+.transfer-station b.line-1 {
+    color: #015eaa;
+}
+.over-station-first.line-2 h3,
+.over-station-second.line-2 h3,
+.transfer-station b.line-2 {
+    color: #1cb25a;
+}
+.over-station-first.line-3 h3,
+.over-station-second.line-3 h3,
+.transfer-station b.line-3 {
+    color: #f67c30;
+}
+.over-station-first.line-4 h3,
+.over-station-second.line-4 h3,
+.transfer-station b.line-4 {
+    color: #01a9e9;
+}
+.over-station-first.line-5 h3,
+.over-station-second.line-5 h3,
+.transfer-station b.line-5 {
+    color: #9c60a9;
+}
+.over-station-first.line-6 h3,
+.over-station-second.line-6 h3,
+.transfer-station b.line-6 {
+    color: #c67535;
+}
+.over-station-first.line-7 h3,
+.over-station-second.line-7 h3,
+.transfer-station b.line-7 {
+    color: #667515;
+}
+.over-station-first.line-8 h3,
+.over-station-second.line-8 h3,
+.transfer-station b.line-8 {
+    color: #e92470;
+}
