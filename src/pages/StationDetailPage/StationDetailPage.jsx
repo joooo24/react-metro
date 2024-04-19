@@ -1,7 +1,8 @@
 import React from "react";
 import { useSearchParams } from "react-router-dom";
-
 import StationAddressInfo from "./component/StationAddressInfo/StationAddressInfo";
+import ArrivalInfo from "./component/ArrivalInfo/ArrivalInfo";
+import RealTimeInfo from "./component/RealTimeInfo/RealTimeInfo";
 import "./StationDetailPage.css";
 
 const StationDetailPage = () => {
@@ -17,34 +18,12 @@ const StationDetailPage = () => {
                     <div className="station-name">역 이름</div>
                     <div className="station-name">{currentStation}</div>
                 </div>
-                <ul className="arr-start-end">
-                    <li>
-                        <span className="tit">첫차</span>
-                        <span className="time">04:00</span>
-                    </li>
-                    <li>
-                        <span className="tit">막차</span>
-                        <span className="time">04:00</span>
-                    </li>
-                </ul>
+                {/* 도착정보 */}
+                <ArrivalInfo currentStation={currentStation} />
                 <button className="btn-show-station">지하철 노선도 보기</button>
-                <ul className="arr-real-time">
-                    <li>
-                        <span className="tit">당 역</span>
-                        <span className="station">{currentStation}</span>
-                        <span className="status">도착</span>
-                    </li>
-                    <li>
-                        <span className="tit">전 역</span>
-                        <span className="station">강남역</span>
-                        <span className="status">도착</span>
-                    </li>
-                    <li>
-                        <span className="tit">n역 전</span>
-                        <span className="station">강남역</span>
-                        <span className="status">접근</span>
-                    </li>
-                </ul>
+                {/* 실시간 도착정보 */}
+                <RealTimeInfo currentStation={currentStation} />
+                {/* 지하철 정보 */}
                 <StationAddressInfo currentStation={currentStation} />
             </div>
         </div>
