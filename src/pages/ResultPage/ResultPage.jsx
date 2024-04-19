@@ -14,22 +14,20 @@ const ResultPage = () => {
     const departLine = query.get("departLine").replace(/호선$/, '');
     const arriveLine = query.get("arriveLine").replace(/호선$/, '');
 
-    const [statnPositionList, setStatnPositionList] = useState([])
     const [statnLat, setStatnLat] = useState()
     const [statnLng, setStatnLng] = useState()
 
     const { data: statnPosDB } = useStationPositionQuery()
 
     useEffect(() => {
-        if (statnPositionList.length > 0) {
-            const statnPosition = statnPositionList.find(station => station.StatnNm === departStatnNm)
+        if (statnPosDB.length > 0) {
+            const statnPosition = statnPosDB.find(station => station.StatnNm === departStatnNm)
             if (statnPosition) {
                 setStatnLat(statnPosition.lat)
                 setStatnLng(statnPosition.lng)
             }
         }
-
-    }, [statnPositionList])
+    }, [])
 
     return (
         <div className="station-result-page">
