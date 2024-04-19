@@ -1,41 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useSearchParams } from "react-router-dom";
-import { Alert } from "react-bootstrap";
-import { useStationAddressQuery } from "../../hooks/useStationAddress";
+
 import StationAddressInfo from "./component/StationAddressInfo/StationAddressInfo";
 import "./StationDetailPage.css";
 
 const StationDetailPage = () => {
+    // eslint-disable-next-line
     const [query, setQuery] = useSearchParams();
     const currentStation = query.get("q");
-
-    const [stationAddress, setStationAddress] = useState({});
-    const {
-        data: addressData,
-        isLoading,
-        isError,
-        error,
-    } = useStationAddressQuery({
-        startIdx: 1,
-        endIdx: 300,
-    });
-
-    useEffect(() => {
-        if (!isLoading && !isError) {
-            const foundStation = addressData?.find(
-                (station) => station.STATN_NM === currentStation
-            );
-            setStationAddress(foundStation || {});
-        }
-    }, [isLoading, isError, addressData, currentStation]);
-
-    if (isLoading) {
-        return <div>정보를 받아오는 중입니다</div>;
-    }
-
-    if (isError) {
-        return <Alert variant="danger">{error.message}</Alert>;
-    }
 
     return (
         <div className="station-detail-page">
@@ -73,7 +45,7 @@ const StationDetailPage = () => {
                         <span className="status">접근</span>
                     </li>
                 </ul>
-                <StationAddressInfo stationAddress={stationAddress} />
+                <StationAddressInfo currentStation={currentStation} />
             </div>
         </div>
     );

@@ -1,6 +1,36 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { Alert } from "react-bootstrap";
+import { useStationAddressQuery } from "../../../../hooks/useStationAddress";
 
-const StationAddressInfo = ({ stationAddress }) => {
+const StationAddressInfo = ({ currentStation }) => {
+    const [stationAddress, setStationAddress] = useState({});
+    const {
+        data: addressData,
+        isLoading,
+        isError,
+        error,
+    } = useStationAddressQuery({
+        startIdx: 1,
+        endIdx: 300,
+    });
+
+    useEffect(() => {
+        if (!isLoading && !isError) {
+            const foundStation = addressData?.find(
+                (station) => station.STATN_NM === currentStation
+            );
+            setStationAddress(foundStation || {});
+        }
+    }, [isLoading, isError, addressData, currentStation]);
+
+    if (isLoading) {
+        return <div>정보를 받아오는 중입니다</div>;
+    }
+
+    if (isError) {
+        return <Alert variant="danger">{error.message}</Alert>;
+    }
+
     if (!stationAddress) return null;
 
     return (
