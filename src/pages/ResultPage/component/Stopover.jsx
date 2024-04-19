@@ -5,9 +5,9 @@ import { useNavigate } from "react-router-dom";
 
 const Stopover = ({ depart, arrive, departLine, arriveLine }) => {
     // 경유지 토글 버튼 >> 진행예정
-    const [showStopover, setShowStopover] = useState(false);
+    const [showStopover, setStopover] = useState(false);
     const isToggleOpen = () => {
-        setShowStopover((prev) => !prev);
+        setStopover((prev) => !prev);
     };
 
     // 역 상세 페이지 이동
@@ -174,11 +174,10 @@ const Stopover = ({ depart, arrive, departLine, arriveLine }) => {
                             </h3>
                         </div>
                     )}
-                    {stopovers2.length === 0 &&
-                        (stopovers1.length > 0 &&
-                        stopovers2.length === 0 ? null : (
-                            <p>경유지 정보를 가져올 수 없습니다.</p>
-                        ))}
+                    {stopovers2.length === 0 && stopovers1.length === 0 && (
+                        <p>경유지 정보를 가져올 수 없습니다.</p>
+                    )}
+
                     {stopovers2.map((station, idx) => (
                         <div
                             className={`over-station-second ${getLineClass(
