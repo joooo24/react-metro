@@ -2,21 +2,23 @@ import React, { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Alert } from "react-bootstrap";
 import { useStationAddressQuery } from "../../hooks/useStationAddress";
+import StationAddressInfo from "./component/StationAddressInfo/StationAddressInfo";
 import "./StationDetailPage.css";
 
 const StationDetailPage = () => {
     const [query, setQuery] = useSearchParams();
     const currentStation = query.get("q");
-    console.log("currentStation", currentStation);
 
     const [stationAddress, setStationAddress] = useState({});
-
     const {
         data: addressData,
         isLoading,
         isError,
         error,
-    } = useStationAddressQuery({ startIdx: 1, endIdx: 300 });
+    } = useStationAddressQuery({
+        startIdx: 1,
+        endIdx: 300,
+    });
 
     useEffect(() => {
         if (!isLoading && !isError) {
@@ -71,22 +73,7 @@ const StationDetailPage = () => {
                         <span className="status">접근</span>
                     </li>
                 </ul>
-                {stationAddress && (
-                    <div className="station-address">
-                        <h4>주소</h4>
-                        <p>
-                            {stationAddress.ADRES}
-                            <br />
-                            {stationAddress.RDNMADR}
-                        </p>
-                        <p>
-                            {stationAddress.TELNO} <b>대표번호</b>
-                        </p>
-                        <p>
-                            02-6110-1122 <b>유실물센터</b>
-                        </p>
-                    </div>
-                )}
+                <StationAddressInfo stationAddress={stationAddress} />
             </div>
         </div>
     );
