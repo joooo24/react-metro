@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
 import "./ResultPage.css";
 import { useSearchParams } from "react-router-dom";
-import KakaoMap from '../../common/KakaoMap'
+import RequiredTime from "./component/RequiredTime/RequiredTime";
+import KakaoMap from '../../common/KakaoMap/KakaoMap'
 import axios from "axios";
+import DepartureArrivalTime from "./component/DepartureArrivalTime/DepartureArrivalTime";
+
 
 const ResultPage = () => {
     const [query, setQuery] = useSearchParams()
@@ -44,9 +47,11 @@ const ResultPage = () => {
                 <KakaoMap statnLat={statnLat} statnLng={statnLng} />
             </div>
             <div className="navigate-result-information">
-                <div>소요시간</div>
-                <div>출발/도착시간</div>
-                <div>경유지</div>
+                <RequiredTime />
+                <DepartureArrivalTime />
+                <div>
+                    경유지
+                </div>
             </div>
         </div>
     )
