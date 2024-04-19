@@ -52,7 +52,7 @@ textarea:active {
   margin-bottom: 26px;
 }
 
-.search-input div input {
+.search-input div .select-name {
     width: 320px;
     height: 60px;
     font-weight: 500;
@@ -63,15 +63,16 @@ textarea:active {
     background-size: 30px;
     background-repeat: no-repeat;
     background-position: 20px center;
-    padding: 18px 64px;
+    padding-left: 64px;
     outline: none;
     cursor: pointer;
     margin-right: 10px;
 }
 
-.search-input div select {
+.search-input div .select-line {
   color: #909090;
   width: 180px;
+  height: 60px;
   font-weight: 500;
   border-radius: 30px;
   border:2px solid #EAEAEA;
@@ -79,6 +80,12 @@ textarea:active {
   padding: 0 18px;
   outline: none;
   cursor: pointer;
+}
+
+.line-img {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
 }
 
 .search-input button {

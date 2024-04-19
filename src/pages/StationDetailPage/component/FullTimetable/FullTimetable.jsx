@@ -5,8 +5,7 @@ import './FullTimetable.css';
 import { Alert } from "react-bootstrap";
 import { useStationFullTimeQuery } from '../../../../hooks/useStationFullTIme';
 import { useSearchParams } from 'react-router-dom';
-import { useStationNameInfoQuery } from '../../../../hooks/\buseStationNameInfo';
-import { BsDot } from "react-icons/bs";
+import { useStationNameInfoQuery } from '../../../../hooks/useStationNameInfo';
 import { MdNavigateBefore } from "react-icons/md";
 
 const FullTimetable = () => {
@@ -25,9 +24,9 @@ const FullTimetable = () => {
     // console.log('station',stationId);
 
   const { data: fullTimeData1, isLoading1, isError1, error1 } = useStationFullTimeQuery({startIdx:1 , endIdx: 500, stationCd: stationId, week: week, inout: 1});
-  const { data: fullTimeData2, isLoading2, isError3, error2 } = useStationFullTimeQuery({startIdx:1 , endIdx: 500, stationCd: stationId, week: week, inout: 2});
+  const { data: fullTimeData2 } = useStationFullTimeQuery({startIdx:1 , endIdx: 500, stationCd: stationId, week: week, inout: 2});
 
-  //오늘 날짜 -> 요일 -> week값
+  //오늘 날짜 -> 요일 -> week값 
     function getToday() {
       return new Date();
     }
