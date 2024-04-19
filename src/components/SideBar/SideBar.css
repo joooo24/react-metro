@@ -31,6 +31,7 @@
 .sidebar-title{
     font-weight: bold;
     color: #23286B;
+    font-family: "Noto Sans KR", sans-serif;
 }
 
 .sidebar-img-area{
@@ -38,6 +39,12 @@
 }
 .sidebar-img-area img{
     width: 100%;
+}
+
+.close-slider-btn{
+    display: flex;
+    flex-flow: column;
+    justify-content: center;
 }
 
 .sidebar-arrow{
@@ -61,6 +68,18 @@
 
 @media (max-width:425px){
     .sidebar{
+        position: static;
+        display: flex;
+        flex-flow: column;
+        width: 100%;
+        height: 90vh;
+        justify-content: center;
+    }
+
+    .close-slider-btn{
+        display: none;
+    }
+    /* .sidebar{
         overflow: hidden;
         width: 100%;
         height: 500px;
@@ -71,7 +90,7 @@
         margin-top: -95%;
         margin-left: 0;
     }
-    .sidebar-wrapper{
+    .sidebar-wrapper{ 
         width: 100%;
         padding-top: 100px;
     }
@@ -85,7 +104,7 @@
     .sidebar-arrow{
        width: 100px;
        height: 100px;
-       /* background-color: #60584F; */
+       
     }
     .sidebar-arrow.left{
         height: 100%;
@@ -94,8 +113,8 @@
     .sidebar-arrow.right{
         height: 100%;
         transform: rotate(270deg);
-        /* background-color: #60584F;   */
         
-    }
+        
+    } */
 
 }
