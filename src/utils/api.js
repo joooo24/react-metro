@@ -16,3 +16,7 @@ export const api_full_time = axios.create({
 export const api_name_info = axios.create({
     baseURL: `http://openAPI.seoul.go.kr:8088/${API_KEY}/json/`
 })
+
+export const api_map_position = axios.create({
+    baseURL: `http://localhost:5000/stations/`
+})

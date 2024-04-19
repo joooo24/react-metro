@@ -5,7 +5,7 @@ import RequiredTime from "./component/RequiredTime/RequiredTime";
 import KakaoMap from '../../common/KakaoMap/KakaoMap'
 import axios from "axios";
 import DepartureArrivalTime from "./component/DepartureArrivalTime/DepartureArrivalTime";
-
+import { useStationPositionQuery } from "../../hooks/useStationPosition";
 
 const ResultPage = () => {
     const [query, setQuery] = useSearchParams()
@@ -18,17 +18,7 @@ const ResultPage = () => {
     const [statnLat, setStatnLat] = useState()
     const [statnLng, setStatnLng] = useState()
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get('http://localhost:5000/stations/')
-                setStatnPositionList(response.data)
-            } catch (error) {
-                console.error('Error fetching data: ', error)
-            }
-        }
-        fetchData()
-    }, [])
+    const { data: statnPosDB } = useStationPositionQuery()
 
     useEffect(() => {
         if (statnPositionList.length > 0) {
