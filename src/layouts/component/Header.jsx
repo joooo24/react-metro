@@ -43,7 +43,10 @@ const Header = ({auth, setAuth}) => {
                     </Link>
                     <div className="header-contents">
                         {/* --------- 서치바 --------- */}
-                        <form className="header-search" onSubmit={searchByKeyword}>
+                        <form
+                            className="header-search"
+                            onSubmit={searchByKeyword}
+                        >
                             <img src={search} alt="search" />
                             <input
                                 type="text"
