@@ -66,7 +66,7 @@ const Stopover = ({ depart, arrive, departLine, arriveLine }) => {
                     return data
                         .slice(endIndex + 1, startIndex)
                         .reverse()
-                        .filter((station) => station.LINE === departLine); // 해당 호선의 역만 필터링
+                        .filter((station) => station.LINE === departLine); // 해당 호선의 역만 필터링git
                 }
             };
 
@@ -143,6 +143,9 @@ const Stopover = ({ depart, arrive, departLine, arriveLine }) => {
                 <p>도착</p>
                 <h2>{arriveLine}</h2>
                 <h3 onClick={() => goToDetailStation(arrive)}>{arrive}역</h3>
+            </div>
+            <div className="">
+                <p>-잘못된 정보 신고-</p>
             </div>
         </div>
     );
