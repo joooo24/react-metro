@@ -1,16 +1,27 @@
-import React,{useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { useRealtimePositionQuery } from "../../../../hooks/useRealtimePosition";
 
 
 const StationList = ({ currentStation }) => {
-    console.log(currentStation); // 강남역
-    const { data: stationPosition, isLoading, isError, error } = useRealtimePositionQuery({
-        startIdx: 1,
+
+    const [realtimeStation, setRealtimeStation]= useState();
+
+    const { data:stationPosition, isLoading, isError, error } = useRealtimePositionQuery({
+        startIdx: 0,
         endIdx: 50,
-        statnNm: currentStation // 현재 역을 subwayNm에 넣기
+        statnNm: currentStation 
     });
-    console.log(stationPosition?.statnNm);
-   
+
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
+
+    if (isError) {
+        return <div>Error: {error.message}</div>;
+    }
+
+    console.log(realtimeStation)
+    console.log(stationPosition?.statnNm)
     return (
         <div className="station-list">
             <div className="station-name">역 이름</div>
