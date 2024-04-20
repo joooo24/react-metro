@@ -51,7 +51,18 @@ const ResultPage = () => {
     console.log("ddd", departLineStatnList)
     console.log("aaa", arriveLineStatnList)
 
+    if (departLine == arriveLine && statnPosDB) {
+        let startIndex = departLineStatnList?.findIndex(station => station.STATN_NM.includes(departStatnNm))
+        let arriveIndex = departLineStatnList?.findIndex(station => station.STATN_NM.includes(arriveStatnNm))
 
+        if (startIndex >= 0 && arriveIndex >= 0 && startIndex <= arriveIndex) {
+            allStopList = departLineStatnList?.slice(startIndex, arriveIndex + 1)
+        }
+        else if (startIndex >= 0 && arriveIndex >= 0 && startIndex > arriveIndex) {
+            [startIndex, arriveIndex] = [arriveIndex, startIndex]
+            allStopList = departLineStatnList?.slice(startIndex, arriveIndex + 1).reverse()
+        }
+    }
 
     if (departLine != arriveLine && statnPosDB) {
         const departStopList = departLineStatnList?.map(station => station.STATN_NM)
@@ -116,7 +127,7 @@ const ResultPage = () => {
         const statnPosition = statnPosDB?.find(station => station.StatnNm === departStatnNm)
         setStatnLat(statnPosition?.lat)
         setStatnLng(statnPosition?.lng)
-        if (statnPosition) {
+        if (statnPosition && ArrivalList) {
             setResultDepartTime(FindDepartTime(ArrivalList))
         }
     }, [statnPosDB])
