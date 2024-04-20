@@ -4,10 +4,10 @@ import "./AppLayout.css";
 import Footer from './component/Footer/Footer';
 import Header from "./component/Header";
 
-const AppLayout = () => {
+const AppLayout = ({auth,setAuth}) => {
     return (
         <>
-            <Header />
+            <Header auth={auth} setAuth={setAuth}/>
             <Outlet />
             <Footer />
         </>

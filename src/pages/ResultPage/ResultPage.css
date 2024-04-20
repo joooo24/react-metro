@@ -1,0 +1,49 @@
+.station-result-page {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 150px 0 80px;
+}
+
+.result-map-wrap {
+    width: 100%;
+    height: 580px;
+    /* max-height: 600px; */
+    margin-right: 20px;
+    border-radius: 20px;
+    overflow: hidden;
+    background-color: #f1f1f1;
+}
+
+.navigate-result-information {
+    width: 100%;
+}
+
+.report-form-wrap {
+    position: fixed;
+    top: 0;
+    right: -100%; /* 초기에 화면 밖으로 숨겨둠 */
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: flex-end;
+    background-color: rgba(0, 0, 0, 0.5); /* 반투명 배경 */
+    transition: right 0.5s; /* 슬라이드 애니메이션 */
+}
+
+.report-form-wrap.visible {
+    right: 0; /* 보이게 설정 */
+}
+
+.report-form-content {
+    width: 30%;
+    min-width: 300px;
+    height: 100%;
+    background-color: white;
+    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    overflow-y: auto; /* 내용이 많을 때 스크롤 */
+}
