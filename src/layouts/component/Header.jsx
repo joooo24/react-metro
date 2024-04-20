@@ -8,6 +8,7 @@ import star from "../../assets/images/star.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { useStationNameInfoQuery } from "../../hooks/useStationNameInfo";
 import FavoriteStationList from "../../common/FavoriteStationList/FavoriteStationList";
+import { MdClose } from "react-icons/md";
 
 const Header = ({ auth, setAuth }) => {
     const [istoggle, setToggle] = useState(false);
@@ -141,6 +142,9 @@ const Header = ({ auth, setAuth }) => {
         }
     };
 
+    const [showFavoriteList, setShowFavoriteList ] = useState(false);
+    console.log("showFavoriteList",showFavoriteList)
+
     return (
         <div className="header">
             <div className="header-fixed-space"></div>
@@ -189,7 +193,7 @@ const Header = ({ auth, setAuth }) => {
                             <button type="submit">검색</button>
                         </form>
                         {/* --------- 즐겨찾기 --------- */}
-                        <div className="header-bookmark">
+                        <div className="header-bookmark" onClick={() => setShowFavoriteList(true)}>
                             <img src={star} alt="star" />
                         </div>
                         {/* --------- 로그인 --------- */}
@@ -262,6 +266,13 @@ const Header = ({ auth, setAuth }) => {
                     </div>
                 </div>
             </header>
+            {showFavoriteList ? (
+               
+                <div className="favorite-list-modal">
+                    <MdClose className="btn-close" onClick={() => setShowFavoriteList(false)}/>
+                    <FavoriteStationList />
+                </div>
+            ) : null}
         </div>
     );
 };
