@@ -8,8 +8,10 @@ import star from "../../assets/images/star.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { useStationNameInfoQuery } from "../../hooks/useStationNameInfo";
 import FavoriteStationList from "../../common/FavoriteStationList/FavoriteStationList";
+import { useDispatch, useSelector } from "react-redux";
+import { authenticateActions } from "../../store/authenticateReducer";
 
-const Header = ({ auth, setAuth }) => {
+const Header = () => {
     const [istoggle, setToggle] = useState(false);
     const [selectedStation, setSelectedStation] = useState(null);
     const [stationOptions, setStationOptions] = useState([]);
@@ -132,9 +134,13 @@ const Header = ({ auth, setAuth }) => {
     };
 
     //-----------로그인버튼---------------
+    const auth = useSelector(state => state.auth.authenticate);
+    const dispatch = useDispatch();
+
     const goToLoginPage = () => {
         if (auth) {
-            setAuth(false);
+            //setAuth(false);
+            dispatch(authenticateActions.logout());
             navigate("/");
         } else {
             navigate("/login");
@@ -219,7 +225,7 @@ const Header = ({ auth, setAuth }) => {
                             {/* --------- 로그인 --------- */}
                             <div className="header-login">
                                 <img src={login} alt="login" />
-                                <p>로그인</p>
+                                <p>{auth ? "로그아웃" : "로그인"}</p>
                             </div>
                             {/* --------- 서치바 --------- */}
                             <form

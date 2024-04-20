@@ -14,7 +14,6 @@ import ErrorPage from './pages/ErrorPage';
 function App() {
     const [auth, setAuth]=useState(false);
 
-
     return (
         <Routes>
             <Route path="/" element={<AppLayout auth={auth} setAuth={setAuth}/>}>
