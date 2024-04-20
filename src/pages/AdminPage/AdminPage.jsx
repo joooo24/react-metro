@@ -2,10 +2,13 @@ import { useState, useEffect } from "react";
 import "./AdminPage.style.css";
 import { useNavigate } from "react-router-dom";
 import ReceiveList from "./component/ReceiveList";
+import { useSelector } from "react-redux";
 
 const AdminPage = () => {
     const navigate = useNavigate();
     const [adminAuth, setAdminAuth] = useState(false);
+    let reports = useSelector(state => state.reports.reports)
+    console.log("신고접수 목록", reports)
 
     useEffect(() => {
         const passKey = prompt("관리자 PassKey를 입력하세요.");
@@ -32,10 +35,14 @@ const AdminPage = () => {
                     {/* 삭제 예정 */}
                     <div className="admin-contents">
                         <ul>
-                            <li className="admin-content">신고페이지</li>
-                            <li className="admin-content">신고페이지</li>
-                            <li className="admin-content">신고페이지</li>
-                            <ReceiveList />
+                            {reports?.map((report, index) => (
+                                <ReceiveList
+                                    key={index}
+                                    title={report.title}
+                                    userName={report.userName}
+                                    content={report.content}
+                                />
+                            ))}
                         </ul>
                     </div>
                 </article>
