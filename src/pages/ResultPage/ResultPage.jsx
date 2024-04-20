@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import "./ResultPage.css";
 import { useSearchParams } from "react-router-dom";
-import RequiredTime from "./component/RequiredTime/RequiredTime";
-import KakaoMap from '../../common/KakaoMap/KakaoMap'
+import Stopover from "./component/Stopover";
+import KakaoMap from "../../common/KakaoMap";
 import axios from "axios";
 import DepartureArrivalTime from "./component/DepartureArrivalTime/DepartureArrivalTime";
 import { useStationPositionQuery } from "../../hooks/useStationPosition";
@@ -14,44 +14,41 @@ const startIdx = 0
 const endIdx = 50
 
 const ResultPage = () => {
-    const [query, setQuery] = useSearchParams()
-    const departStatnNm = query.get("depart").replace(/역$/, '');
-    const arriveStatnNm = query.get("arrive").replace(/역$/, '');
-    const departLine = query.get("departLine").replace(/호선$/, '');
-    const arriveLine = query.get("arriveLine").replace(/호선$/, '');
+    const [query, setQuery] = useSearchParams();
+    const departStatnNm = query.get("depart").replace(/역$/, "");
+    const arriveStatnNm = query.get("arrive").replace(/역$/, "");
+    const departLine = query.get("departLine").replace(/호선$/, "");
+    const arriveLine = query.get("arriveLine").replace(/호선$/, "");
 
-    const [statnLat, setStatnLat] = useState()
-    const [statnLng, setStatnLng] = useState()
-    const [departTime, setDepartTime] = useState("")
-    const [showReport, isShowReport] = useState(false)
-
-    const { data: statnPosDB } = useStationPositionQuery()
-    //실시간 도착 
-    const { data: ArrivalList, isLoading, isError, error } =
-        useRealtimePositionQuery({ startIdx, endIdx, statnNm: departStatnNm })
-
-    console.log("실시간 도착", ArrivalList)
+    const [statnPositionList, setStatnPositionList] = useState([]);
+    const [statnLat, setStatnLat] = useState();
+    const [statnLng, setStatnLng] = useState();
 
     useEffect(() => {
-        const statnPosition = statnPosDB?.find(station => station.StatnNm === departStatnNm)
-        setStatnLat(statnPosition?.lat)
-        setStatnLng(statnPosition?.lng)
-        if (statnPosition) {
-            setDepartTime(FindDepartTime(ArrivalList))
+        const fetchData = async () => {
+            try {
+                const response = await axios.get(
+                    "http://localhost:5000/stations/"
+                );
+                setStatnPositionList(response.data);
+            } catch (error) {
+                console.error("Error fetching data: ", error);
+            }
+        };
+        fetchData();
+    }, []);
+
+    useEffect(() => {
+        if (statnPositionList.length > 0) {
+            const statnPosition = statnPositionList.find(
+                (station) => station.StatnNm === departStatnNm
+            );
+            if (statnPosition) {
+                setStatnLat(statnPosition.lat);
+                setStatnLng(statnPosition.lng);
+            }
         }
-    }, [statnPosDB])
-
-    const FindDepartTime = (ArrivalList) => {
-        let recptnDt = new Date(ArrivalList[2]?.recptnDt)
-        let barvlDt = parseInt(ArrivalList[2]?.barvlDt)
-        let result = calTime(recptnDt, barvlDt)
-        console.log("출발시간 결과 : ", result)
-        return result
-    }
-
-    const handleShowReport = () => {
-        isShowReport(!showReport)
-    }
+    }, [statnPositionList]);
 
     return (
         <div className="station-result-page">
@@ -59,21 +56,37 @@ const ResultPage = () => {
                 <KakaoMap statnLat={statnLat} statnLng={statnLng} />
             </div>
             <div className="navigate-result-information">
-                <RequiredTime />
-                <DepartureArrivalTime departTime={departTime} />
-                <div>
-                    경유지
-                </div>
-                <div onClick={() => handleShowReport()}> --잘못된 정보 신고-- </div>
-            </div>
-            <div className={`report-form-wrap ${showReport ? "visible" : ""}`}>
-                <div className="report-form-content">
-                    <ReportForm />
-                    <div onClick={handleShowReport}>--되돌아가기--</div>
-                </div>
+                <div>소요시간</div>
+                <div>출발/도착시간</div>
+                <Stopover
+                    depart={departStatnNm}
+                    arrive={arriveStatnNm}
+                    departLine={departLine}
+                    arriveLine={arriveLine}
+                />
             </div>
         </div>
-    )
+    );
 };
 
+// return (
+//     <div className="station-detail-page">
+//         <div className="map-wrap">지도</div>
+//         <div className="station-information">
+//             {/* 역 리스트 */}
+//             <StationList currentStation={currentStation} />
+
+//             {/* 도착정보 */}
+//             <ArrivalInfo currentStation={currentStation} />
+//             <FullTimetable />
+//             <button className="btn-show-station">지하철 노선도 보기</button>
+
+//             {/* 실시간 도착정보 */}
+//             <RealTimeInfo currentStation={currentStation} />
+
+//             {/* 역 주소 */}
+//             <StationAddressInfo currentStation={currentStation} />
+//         </div>
+//     </div>
+// );
 export default ResultPage;

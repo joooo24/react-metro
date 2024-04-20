@@ -25,7 +25,7 @@ export const useSearchFirstAndLastTimeQuery = ({
     FR_CODE,
 }) => {
     return useQuery({
-        queryKey: ["station-address", START_INDEX, END_INDEX],
+        queryKey: ["station-address", STATION_CD],
         queryFn: () =>
             fetchSearchFirstAndLastTime({
                 START_INDEX,
@@ -36,7 +36,7 @@ export const useSearchFirstAndLastTimeQuery = ({
                 STATION_CD,
                 FR_CODE,
             }),
-        select: (data) => data.data,
+        select: (data) => data.data.SearchFirstAndLastTrainbyLineServiceNew.row[0],
     });
 };
 
