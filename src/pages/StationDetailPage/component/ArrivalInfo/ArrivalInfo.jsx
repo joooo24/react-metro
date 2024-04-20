@@ -11,7 +11,7 @@ const ArrivalInfo = ({ currentStation }) => {
         startIdx: 1,
         endIdx: 1000,
     });
-    console.log("stationName", stationName);
+    // console.log("stationName", stationName);
 
     // 현재 역 정보
     useEffect(() => {

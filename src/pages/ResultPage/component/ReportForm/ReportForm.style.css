@@ -1,0 +1,51 @@
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.report-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 400px; /* 폼의 너비 조절 */
+    margin: auto;
+    padding: 20px;
+    background-color: #f3f3f3; /* 회색 계열 배경 */
+    border-radius: 8px;
+    animation: fadeIn 1s ease-out; /* 애니메이션 추가 */
+}
+
+.report-form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333; /* 어두운 회색 텍스트 */
+}
+
+.report-form input[type="text"],
+.report-form textarea {
+    width: 100%; /* 폭을 꽉 채우도록 */
+    padding: 10px;
+    border: 2px solid #87ceeb; /* 하늘색 계열 테두리 */
+    border-radius: 4px;
+}
+
+.report-form button {
+    padding: 10px 20px;
+    background-color: #87ceeb; /* 하늘색 계열 배경 */
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.report-form button:hover {
+    background-color: #6495ed; /* 버튼 호버 시 색상 변경 */
+}
