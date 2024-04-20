@@ -4,36 +4,27 @@ import { useSearchFirstAndLastTimeQuery } from "../../../../hooks/useSearchFirst
 import { useStationNameInfoQuery } from "../../../../hooks/useStationNameInfo";
 
 const ArrivalInfo = ({ currentStation }) => {
-    const [stationNameInfo, setStationNameInfo] = useState({}); // 초기 상태를 빈 객체로 설정
-    const [replaceLINE_NUM, setReplaceLINE_NUM] = useState("");
-
+    const [stationInfo, setStationInfo] = useState({});
+    const [lineNumber, setLineNumber] = useState("");
     const { data: stationName } = useStationNameInfoQuery({
         startIdx: 1,
         endIdx: 1000,
     });
-    // console.log("stationName", stationName);
 
-    // 현재 역 정보
     useEffect(() => {
         const foundStation = stationName?.find(
             (item) => item.STATION_NM === currentStation
         );
         if (foundStation) {
-            setStationNameInfo(foundStation);
-        }
-    }, [stationName, currentStation]);
-
-    useEffect(() => {
-        if (stationNameInfo && stationNameInfo.LINE_NUM != null) {
-            const formattedLineNum = String(stationNameInfo.LINE_NUM).replace(
+            setStationInfo(foundStation);
+            const formattedLineNum = String(foundStation.LINE_NUM).replace(
                 /^0+/,
                 ""
             );
-            setReplaceLINE_NUM(formattedLineNum);
+            setLineNumber(formattedLineNum);
         }
-    }, [stationNameInfo]);
+    }, [stationName, currentStation]);
 
-    // 도착 시간 정보
     const {
         data: stationArrivalData,
         isLoading,
@@ -42,25 +33,13 @@ const ArrivalInfo = ({ currentStation }) => {
     } = useSearchFirstAndLastTimeQuery({
         START_INDEX: 1,
         END_INDEX: 1,
-        LINE_NUM: replaceLINE_NUM,
+        LINE_NUM: lineNumber,
         INOUT_TAG: 1, // 상행/내선
         WEEK_TAG: 1, // 평일
-        STATION_CD: stationNameInfo?.STATION_CD,
-        FR_CODE: stationNameInfo?.FR_CODE,
+        STATION_CD: stationInfo?.STATION_CD,
+        FR_CODE: stationInfo?.FR_CODE,
     });
 
-    // console.log(
-    //     "LINE_NUM",
-    //     replaceLINE_NUM,
-    //     "STATION_CD",
-    //     stationNameInfo?.STATION_CD,
-    //     "FR_CODE",
-    //     stationNameInfo?.FR_CODE
-    // );
-
-    console.log("stationArrivalData", stationArrivalData);
-
-    // 시간 포맷
     const convertTo12HourFormat = (timeString) => {
         const hour = timeString.substring(0, 2);
         const minute = timeString.substring(2, 4);
@@ -76,8 +55,7 @@ const ArrivalInfo = ({ currentStation }) => {
         }
 
         // 시간을 "hh:mm:ss AM/PM" 형식으로 변환
-        const formattedTime = `${formattedHour}:${minute}:${second} ${period}`;
-        return formattedTime;
+        return `${formattedHour}:${minute}:${second} ${period}`;
     };
 
     if (isLoading) {
@@ -87,6 +65,7 @@ const ArrivalInfo = ({ currentStation }) => {
     if (isError) {
         return <Alert variant="danger">{error.message}</Alert>;
     }
+
     return (
         <ul className="arr-start-end">
             {stationArrivalData && (
