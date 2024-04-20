@@ -48,6 +48,7 @@
     align-items: center;
     margin: 10px 0;
 }
+/* 점선 */
 .stopover-over-station span:nth-child(1) {
     display: flex;
     flex-direction: column;
@@ -58,9 +59,10 @@
     border-right: 5px dotted #909090;
     margin-right: 30px;
 }
+/* 경유지 내용 */
 .stopover-over-station span:nth-child(2) {
     display: flex;
-    gap: 10px;
+    gap: 15px;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
@@ -79,17 +81,18 @@
 .stopover-over-station span:nth-child(2)::-webkit-scrollbar-track {
     background: gainsboro;
 }
-.stopover-over-station span:nth-child(2) h3 {
+/* .over-station {
+    display: flex;
+    gap: 10px;
+} */
+.over-station h3 {
     cursor: pointer;
+    transition: all 0.1s;
 }
-.over-station-first {
-    display: flex;
-    gap: 10px;
+.over-station h3:hover {
+    color: gray;
 }
-.over-station-second {
-    display: flex;
-    gap: 10px;
-}
+
 /* 환승역 */
 .transfer-station {
     font-size: 20px;
