@@ -1,7 +1,7 @@
 import React from 'react'
 import './RequiredTime.style.css'
 
-const RequiredTime = () => {
+const RequiredTime = ({ totalMinutes }) => {
     return (
         <div className='result-info-container'>
             <div className='required-time-container'>
@@ -9,7 +9,7 @@ const RequiredTime = () => {
                     소요시간
                 </div>
                 <div className='required-time-content'>
-                    8분
+                    {totalMinutes}분
                 </div>
             </div>
         </div>

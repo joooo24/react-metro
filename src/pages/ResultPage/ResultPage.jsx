@@ -7,20 +7,25 @@ import axios from "axios";
 import DepartureArrivalTime from "./component/DepartureArrivalTime/DepartureArrivalTime";
 import { useStationPositionQuery } from "../../hooks/useStationPosition";
 import { useRealtimePositionQuery } from '../../hooks/useRealtimePosition'
-import { calTime } from "../../utils/calTime";
+import { calTime } from "../../utils/time/calTime";
 import ReportForm from "./component/ReportForm/ReportForm";
 import { useStationReqreTimeQuery } from "../../hooks/useStationReqreTime";
+import { timeToMinutes } from "../../utils/time/timeToMinutes";
 
 const startIdx = 0
-const endIdx = 50
+const endIdx = 80
 
 const ResultPage = () => {
 
     let departToStopList = []
     let stopToArriveList = []
-    let stopList = []
+    // 결과값
     let stopStatn
+    let allStopList
+    let totalMinutes
+    let ResultTotalMinutes
 
+    const [resultTotalMinutes, setResultTotalMinutes] = useState(0)
     const [query, setQuery] = useSearchParams()
     const departStatnNm = query.get("depart").replace(/역$/, '');
     const arriveStatnNm = query.get("arrive").replace(/역$/, '');
@@ -36,11 +41,14 @@ const ResultPage = () => {
     //실시간 도착 
     const { data: ArrivalList, isLoading, isError, error } =
         useRealtimePositionQuery({ startIdx, endIdx, statnNm: departStatnNm })
+    // console.log("arivalList", ArrivalList)
     //역간 거리정보 (출발호선, 도착호선)
     const { data: departLineStatnList } = useStationReqreTimeQuery({ startIdx, endIdx, lineNm: departLine })
     const { data: arriveLineStatnList } = useStationReqreTimeQuery({ startIdx, endIdx, lineNm: arriveLine })
     console.log("ddd", departLineStatnList)
     console.log("aaa", arriveLineStatnList)
+
+
 
     if (departLine != arriveLine && statnPosDB) {
         const departStopList = departLineStatnList?.map(station => station.STATN_NM)
@@ -50,18 +58,18 @@ const ResultPage = () => {
             let findStatnName = departStopList[i]
             let findLineName = arriveLine
             ResultStatn = statnPosDB.find((station) =>
-                station.StatnNm == findStatnName && station.LineNm == findLineName)
+                station?.StatnNm == findStatnName && station.LineNm == findLineName)
             if (ResultStatn) {
-                console.log("찾았다", ResultStatn)
+                // console.log("찾았다", ResultStatn)
                 break;
             }
         }
         stopStatn = ResultStatn
-        console.log("환승역", stopStatn)
+        // console.log("환승역", stopStatn)
         //인덱스 찾기 -> slice()로 범위 추출하기
-        console.log(departStatnNm, stopStatn.StatnNm)
+        // console.log(departStatnNm, stopStatn?.StatnNm)
         let startIndex = departLineStatnList?.findIndex(station => station.STATN_NM.includes(departStatnNm))
-        let stopIndex = departLineStatnList?.findIndex(station => station.STATN_NM == stopStatn.StatnNm)
+        let stopIndex = departLineStatnList?.findIndex(station => station.STATN_NM == stopStatn?.StatnNm)
         console.log("출발, 정차", startIndex, stopIndex)
         if (startIndex >= 0 && stopIndex >= 0 && startIndex <= stopIndex) {
             departToStopList = departLineStatnList?.slice(startIndex, stopIndex + 1)
@@ -82,10 +90,18 @@ const ResultPage = () => {
             [stopIndex2, arriveIndex] = [arriveIndex, stopIndex2]
             stopToArriveList = arriveLineStatnList?.slice(stopIndex2, arriveIndex).reverse()
         }
-        let allStopList = [...departToStopList, ...stopToArriveList]
+        allStopList = [...departToStopList, ...stopToArriveList]
         console.log("departToStopList", allStopList)
     }
 
+    if (allStopList) {
+        totalMinutes = allStopList?.reduce((acc, station) => {
+            return acc + timeToMinutes(station.MNT)
+        }, 0)
+        ResultTotalMinutes = Math.ceil(totalMinutes / 60)
+    }
+
+    console.log("소요시간")
     // console.log("실시간 도착", ArrivalList)
 
     useEffect(() => {
@@ -96,6 +112,10 @@ const ResultPage = () => {
             setDepartTime(FindDepartTime(ArrivalList))
         }
     }, [statnPosDB])
+
+    useEffect(() => {
+        setResultTotalMinutes(ResultTotalMinutes)
+    }, [ResultTotalMinutes])
 
     const FindDepartTime = (ArrivalList) => {
         let recptnDt = new Date(ArrivalList[0]?.recptnDt)
@@ -115,7 +135,7 @@ const ResultPage = () => {
                 <KakaoMap statnLat={statnLat} statnLng={statnLng} />
             </div>
             <div className="navigate-result-information">
-                <RequiredTime />
+                <RequiredTime totalMinutes={ResultTotalMinutes} />
                 <DepartureArrivalTime departTime={departTime} />
                 <div>
                     경유지
