@@ -1,16 +1,22 @@
+// StationList 컴포넌트
 import React from "react";
 import { MdFavoriteBorder, MdFavorite } from "react-icons/md";
-import { useFavorites } from "../../../../hooks/useFavorites";
+import { useDispatch, useSelector } from "react-redux";
+import {
+    addToFavorites,
+    removeFromFavorites,
+} from "../../../../actions/favoritesActions";
 
 const StationList = ({ currentStation }) => {
-    const { favorites, addToFavorites, removeFromFavorites } = useFavorites();
+    const favorites = useSelector((state) => state.favorites);
+    const dispatch = useDispatch();
     const isFavorite = favorites.includes(currentStation);
 
     const handleToggleFavorite = () => {
         if (isFavorite) {
-            removeFromFavorites(currentStation);
+            dispatch(removeFromFavorites(currentStation));
         } else {
-            addToFavorites(currentStation);
+            dispatch(addToFavorites(currentStation));
         }
     };
 
