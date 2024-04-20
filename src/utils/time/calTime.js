@@ -20,3 +20,27 @@ export const calTime = (date, arrival) => {
     // "시:분" 형식으로 결과 반환
     return `${formattedHours}:${formattedMinutes}`;
 }
+
+const timeToTotalMinutes = (time) => {
+    const [hours, minutes] = time.split(':').map(Number);
+    return hours * 60 + minutes;
+}
+
+const minutesToHHMM = (totalMinutes) => {
+    const hours = Math.floor(totalMinutes / 60) % 24;  // 24시간 넘어가면 다음날로 계산
+    const minutes = totalMinutes % 60;
+    return `${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}`;
+}
+
+export const calculateTimes = (resultDepartTime, minutesArray) => {
+    const initialMinutes = timeToTotalMinutes(resultDepartTime);
+    const times = [];
+
+    const totalMinutes = minutesArray.reduce((accumulatedMinutes, currentMinutes) => {
+        const newTotalMinutes = accumulatedMinutes + parseInt(currentMinutes);
+        times.push(minutesToHHMM(newTotalMinutes));
+        return newTotalMinutes;
+    }, initialMinutes);
+
+    return times;
+}

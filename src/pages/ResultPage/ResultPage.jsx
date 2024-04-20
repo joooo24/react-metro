@@ -7,7 +7,7 @@ import axios from "axios";
 import DepartureArrivalTime from "./component/DepartureArrivalTime/DepartureArrivalTime";
 import { useStationPositionQuery } from "../../hooks/useStationPosition";
 import { useRealtimePositionQuery } from '../../hooks/useRealtimePosition'
-import { calTime } from "../../utils/time/calTime";
+import { calTime, calculateTimes } from "../../utils/time/calTime";
 import ReportForm from "./component/ReportForm/ReportForm";
 import { useStationReqreTimeQuery } from "../../hooks/useStationReqreTime";
 import { timeToMinutes } from "../../utils/time/timeToMinutes";
@@ -20,12 +20,14 @@ const ResultPage = () => {
 
     let departToStopList = []
     let stopToArriveList = []
-    // 결과값
     let stopStatn
     let allStopList
     let totalMinutes
     let ResultTotalMinutes
     let ResultArrivalTime
+    let minutesOnlyList
+    // 경유지 각각 도착 시간 
+    let updatedStopTimeList
 
     const [resultTotalMinutes, setResultTotalMinutes] = useState(0)
     const [resultDepartTime, setResultDepartTime] = useState("")
@@ -48,8 +50,8 @@ const ResultPage = () => {
     //역간 거리정보 (출발호선, 도착호선)
     const { data: departLineStatnList } = useStationReqreTimeQuery({ startIdx, endIdx, lineNm: departLine })
     const { data: arriveLineStatnList } = useStationReqreTimeQuery({ startIdx, endIdx, lineNm: arriveLine })
-    console.log("ddd", departLineStatnList)
-    console.log("aaa", arriveLineStatnList)
+    // console.log("ddd", departLineStatnList)
+    // console.log("aaa", arriveLineStatnList)
 
     if (departLine == arriveLine && statnPosDB) {
         let startIndex = departLineStatnList?.findIndex(station => station.STATN_NM.includes(departStatnNm))
@@ -105,9 +107,9 @@ const ResultPage = () => {
             stopToArriveList = arriveLineStatnList?.slice(stopIndex2, arriveIndex).reverse()
         }
         allStopList = [...departToStopList, ...stopToArriveList]
-        console.log("departToStopList", allStopList)
     }
 
+    console.log("경유지 리스트", allStopList)
     if (allStopList) {
         totalMinutes = allStopList?.reduce((acc, station) => {
             return acc + timeToMinutes(station?.MNT)
@@ -120,7 +122,7 @@ const ResultPage = () => {
         ResultArrivalTime = addMinutes(resultDepartTime, ResultTotalMinutes)
     }
 
-    console.log("소요시간")
+    // console.log("소요시간")
     // console.log("실시간 도착", ArrivalList)
 
     useEffect(() => {
@@ -143,9 +145,23 @@ const ResultPage = () => {
         let recptnDt = new Date(ArrivalList[0]?.recptnDt)
         let barvlDt = parseInt(ArrivalList[0]?.barvlDt)
         let result = calTime(recptnDt, barvlDt)
-        console.log("출발시간 결과 : ", result)
+        // console.log("출발시간 결과 : ", result)
         return result
     }
+
+    // 출발역 출발시간 업데이트 후, reduce로 누적
+    if (allStopList) {
+        minutesOnlyList = allStopList.map(station => {
+            // MNT 값에서 ':'를 기준으로 분할하고 첫 번째 요소(분)를 반환
+            return station.MNT.split(':')[0];
+        });
+        // console.log("minutes", minutesOnlyList)
+        // console.log("resultDepartTime", resultDepartTime)
+        updatedStopTimeList = calculateTimes(resultDepartTime, minutesOnlyList)
+
+        console.log(updatedStopTimeList)
+    }
+
 
     const handleShowReport = () => {
         isShowReport(!showReport)
@@ -157,6 +173,7 @@ const ResultPage = () => {
     if (isError) {
         return <div>{error.message}</div>
     }
+
 
 
     return (
