@@ -11,6 +11,7 @@ import { calTime } from "../../utils/time/calTime";
 import ReportForm from "./component/ReportForm/ReportForm";
 import { useStationReqreTimeQuery } from "../../hooks/useStationReqreTime";
 import { timeToMinutes } from "../../utils/time/timeToMinutes";
+import { addMinutes } from "../../utils/time/addMinutes";
 
 const startIdx = 0
 const endIdx = 80
@@ -24,8 +25,11 @@ const ResultPage = () => {
     let allStopList
     let totalMinutes
     let ResultTotalMinutes
+    let ResultArrivalTime
 
     const [resultTotalMinutes, setResultTotalMinutes] = useState(0)
+    const [resultDepartTime, setResultDepartTime] = useState("")
+    const [resultArrivalTime, setResultArrivalTime] = useState("")
     const [query, setQuery] = useSearchParams()
     const departStatnNm = query.get("depart").replace(/역$/, '');
     const arriveStatnNm = query.get("arrive").replace(/역$/, '');
@@ -34,7 +38,6 @@ const ResultPage = () => {
 
     const [statnLat, setStatnLat] = useState()
     const [statnLng, setStatnLng] = useState()
-    const [departTime, setDepartTime] = useState("")
     const [showReport, isShowReport] = useState(false)
 
     const { data: statnPosDB } = useStationPositionQuery()
@@ -96,9 +99,14 @@ const ResultPage = () => {
 
     if (allStopList) {
         totalMinutes = allStopList?.reduce((acc, station) => {
-            return acc + timeToMinutes(station.MNT)
+            return acc + timeToMinutes(station?.MNT)
         }, 0)
+
+        //출발지점 역 시간 제외
+        totalMinutes = totalMinutes - timeToMinutes(allStopList[0]?.MNT)
+
         ResultTotalMinutes = Math.ceil(totalMinutes / 60)
+        ResultArrivalTime = addMinutes(resultDepartTime, ResultTotalMinutes)
     }
 
     console.log("소요시간")
@@ -109,13 +117,16 @@ const ResultPage = () => {
         setStatnLat(statnPosition?.lat)
         setStatnLng(statnPosition?.lng)
         if (statnPosition) {
-            setDepartTime(FindDepartTime(ArrivalList))
+            setResultDepartTime(FindDepartTime(ArrivalList))
         }
     }, [statnPosDB])
 
     useEffect(() => {
         setResultTotalMinutes(ResultTotalMinutes)
+        // setResultArrivalTime(ResultArrivalTime)
     }, [ResultTotalMinutes])
+
+
 
     const FindDepartTime = (ArrivalList) => {
         let recptnDt = new Date(ArrivalList[0]?.recptnDt)
@@ -129,6 +140,14 @@ const ResultPage = () => {
         isShowReport(!showReport)
     }
 
+    if (isLoading) {
+        return <h1>is Loading</h1>
+    }
+    if (isError) {
+        return <div>{error.message}</div>
+    }
+
+
     return (
         <div className="station-result-page">
             <div className="result-map-wrap">
@@ -136,7 +155,7 @@ const ResultPage = () => {
             </div>
             <div className="navigate-result-information">
                 <RequiredTime totalMinutes={ResultTotalMinutes} />
-                <DepartureArrivalTime departTime={departTime} />
+                <DepartureArrivalTime departTime={resultDepartTime} arriveTime={ResultArrivalTime} />
                 <div>
                     경유지
                 </div>
