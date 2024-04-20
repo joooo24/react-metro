@@ -23,13 +23,36 @@
 }
 
 .station-list {
-    width: 80%;
+    width: 95%;
     height: 80px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     font-size: 16px;
     margin: 0 auto;
+}
+
+.station-name {
+    padding: 16px 20px;
+    flex: 1;
+    text-align: center;
+    font-size: 14px;
+    width: 100%;
+}
+
+.station-name.current {
+    background-color: #E9F2FF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 20px;
+    padding: 16px 20px;
+    width:50%;
+    margin: 0 10px;
+}
+
+.station-name.current svg {
+    margin-left: 4px;
 }
 
 .arr-start-end {
@@ -147,9 +170,22 @@
         flex-direction: column;
         padding: 100px 16px 20px;
     }
-
+    .station-list {
+        width: 100%;
+        height: 80px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 16px;
+        margin: 0 auto;
+    }
+    
     .map-wrap {
         height: 360px;
+    }
+
+    .station-name {
+        padding: 0;
     }
 
 }

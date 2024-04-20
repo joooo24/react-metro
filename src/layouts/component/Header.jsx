@@ -7,6 +7,7 @@ import login from "../../assets/images/login.svg";
 import star from "../../assets/images/star.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { useStationNameInfoQuery } from "../../hooks/useStationNameInfo";
+import FavoriteStationList from "../../common/FavoriteStationList/FavoriteStationList";
 
 const Header = ({ auth, setAuth }) => {
     const [istoggle, setToggle] = useState(false);
@@ -256,28 +257,7 @@ const Header = ({ auth, setAuth }) => {
                                 />
                                 <button type="submit">검색</button>
                             </form>
-                            <div>
-                                {/* --------- 즐겨찾기 --------- */}
-                                <div className="header-bookmark">
-                                    <img src={star} alt="star" />
-                                    <p>즐겨찾기</p>
-                                </div>
-                                <ul className="header-bookmark-contents">
-                                    {/* li 삭제 예정 */}
-                                    <li>
-                                        <p>건대입구역</p>
-                                        <p>x</p>
-                                    </li>
-                                    <li>
-                                        <p>강남역</p>
-                                        <p>x</p>
-                                    </li>
-                                    <li>
-                                        <p>왕십리역</p>
-                                        <p>x</p>
-                                    </li>
-                                </ul>
-                            </div>
+                            <FavoriteStationList />
                         </div>
                     </div>
                 </div>

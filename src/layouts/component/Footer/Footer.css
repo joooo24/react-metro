@@ -1,14 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+body {
+    font-family: "Noto Sans KR", sans-serif;
+}
+
 ul,
 ol,
 li {
   list-style-type: none;
   padding-left: 0;
   margin-left: 0;
+  font-family: "Noto Sans KR", sans-serif;
+}
+
+a {
+    color: inherit !important;
+    text-decoration: none !important;
 }
 
 .footer {
     width: 100%;
-    height: 400px;
+    height: 340px;
     background-color: #EAEAEA;
     display: flex;
     flex-direction: column;
@@ -17,19 +30,14 @@ li {
     padding: 20px 50px;
 }
 
-.links ul li {
-    font-size: 20px;
-    margin-bottom: 15px;
-    cursor: pointer;
-}
-
 .social-networks {
-    font-size: 28px;
+    font-size: 20px;
     width: 100%;
     display: flex;
     justify-content: space-between;
     padding-bottom: 20px;
     border-bottom: 1px solid black;
+    font-weight: 400;
 }
 
 .social-networks .img {
@@ -41,7 +49,36 @@ li {
     color: rgb(96, 96, 96);
 }
 
-.copyright {
-    font-weight: 700;
+.links {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+}
+
+.links ul {
+    margin-right: 150px;
+}
+
+.links ul div {
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 25px;
+}
+
+.links ul li {
     font-size: 16px;
+    margin-bottom: 15px;
+    cursor: pointer;
+}
+
+.links ul li:hover {
+    color: gray;
+    font-size: 700;
+}
+
+.copyright {
+    font-weight: 500;
+    font-size: 14px;
 }

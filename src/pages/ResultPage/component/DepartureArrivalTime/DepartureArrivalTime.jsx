@@ -1,7 +1,7 @@
 import React from 'react'
 import './DepartureArrivalTime.style.css'
 
-const DepartureArrivalTime = ({ departTime }) => {
+const DepartureArrivalTime = ({ departTime, arriveTime }) => {
 
     // 시간 부분만 추출
     const hour = parseInt(departTime.split(':')[0], 10);
@@ -26,7 +26,7 @@ const DepartureArrivalTime = ({ departTime }) => {
                         출발 {timePeriod} {departTime}
                     </div>
                     <div>
-                        도착 오후 03:46
+                        도착 {timePeriod} {arriveTime}
                     </div>
                 </div>
             </div>
