@@ -80,6 +80,11 @@
 .arr-start-end .time {}
 
 /* Full-Timetable */
+.btn-full-time-table {
+    text-decoration: underline;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
 .arr-start-end li:last-child {
     margin-left: 20px;
     cursor: pointer;
