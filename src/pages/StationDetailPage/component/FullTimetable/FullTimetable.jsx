@@ -13,37 +13,41 @@ const FullTimetable = () => {
   const modalBackground = useRef();
   const [week, setWeek] = useState(getWeekValue());
 
-  const { data: stationName } = useStationNameInfoQuery({startIdx: 1, endIdx: 800 });
-  // console.log('stationName',stationName);
   const [query, setQuery] = useSearchParams();
   const queryValue = query.get('q');
   const exceptStation = queryValue.replace(/역$/, '');
 
-  // Id값만 반환
-  // const stationId = stationName?.find((item) => {
-  //     return queryValue === item.STATION_NM;
-  //   })?.STATION_CD;
+  const { data: stationName } = useStationNameInfoQuery({ startIdx: 1, endIdx: 800 });
 
-    const stationId = stationName
-    ?.filter((item) => queryValue && exceptStation === item.STATION_NM)
-    .map((item) => item.STATION_CD);
-    console.log('station',stationId);
-
-
-  const { data: fullTimeData1, isLoading1, isError1, error1 } = useStationFullTimeQuery({startIdx:1 , endIdx: 500, stationCd: stationId, week: week, inout: 1});
-  const { data: fullTimeData2 } = useStationFullTimeQuery({startIdx:1 , endIdx: 500, stationCd: stationId, week: week, inout: 2});
-  // console.log('fullTimedata-->', fullTimeData1);
-
-
-  //오늘 날짜 -> 요일 -> week값 
-    function getToday() {
-      return new Date();
+  
+  // FR_CODE 100~900 배열
+  const selectedStations = [];
+  stationName?.forEach((station) => {
+    const frCode = parseInt(station.FR_CODE);
+    if (frCode >= 100 && frCode <= 900) {
+      selectedStations?.push(station);
     }
+  });
+  // console.log(selectedStations);
 
-    function getDayOfWeek() {
-      const today = getToday();
-      return today.getDay();
-    }
+  const stationId = selectedStations?.filter((item) => queryValue && exceptStation === item.STATION_NM).map((item) => item.STATION_CD);
+  // console.log('station', stationId);
+
+  const { data: fullTimeData1, isLoading1, isError1, error1 } = useStationFullTimeQuery({ startIdx: 1, endIdx: 500, stationCd: stationId?.[0] || stationId?.[1], week: week, inout: 1 });
+  const { data: fullTimeData2 } = useStationFullTimeQuery({ startIdx: 1, endIdx: 500, stationCd: stationId?.[0] || stationId?.[1], week: week, inout: 2 });
+  // console.log('fullTimedata1-->', fullTimeData1);
+  // console.log('fullTimedata2-->', fullTimeData2);
+
+
+  //오늘 날짜 -> 요일 -> week값
+  function getToday() {
+    return new Date();
+  }
+
+  function getDayOfWeek() {
+    const today = getToday();
+    return today.getDay();
+  }
 
   function getWeekValue() {
     const dayOfWeek = getDayOfWeek();
@@ -65,7 +69,6 @@ const FullTimetable = () => {
     setWeek(weekValue);
   }
 
-
   if (isLoading1) {
     return <div>정보를 받아오는 중입니다</div>;
   }
@@ -76,21 +79,27 @@ const FullTimetable = () => {
 
   return (
     <div>
-      <button onClick={() => setModalOpen(true)}>
-        전체 시간표 보기
-      </button>
-      {
-        modalOpen &&
-        <div className='modal-container' ref={modalBackground} onClick={e => {
-          if (e.target === modalBackground.current) {
-            setModalOpen(false);
-          }
-        }}>
+      <button onClick={() => setModalOpen(true)}>전체 시간표 보기</button>
+      {modalOpen && (
+        <div
+          className='modal-container'
+          ref={modalBackground}
+          onClick={(e) => {
+            if (e.target === modalBackground.current) {
+              setModalOpen(false);
+            }
+          }}
+        >
           <div className='content'>
-            <button className='modal-close-btn' onClick={() => setModalOpen(false)}>
+            <button
+              className='modal-close-btn'
+              onClick={() => setModalOpen(false)}
+            >
               <MdNavigateBefore />
             </button>
-            {fullTimeData1 && fullTimeData1[0] && fullTimeData1[0].STATION_NM ? (
+            {fullTimeData1 &&
+            fullTimeData1[0] &&
+            fullTimeData1[0].STATION_NM ? (
               <>
                 <div className='full-timetable-title'>
                   {fullTimeData1[0].STATION_NM}역 {fullTimeData1[0].LINE_NUM}
@@ -108,12 +117,16 @@ const FullTimetable = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {fullTimeData2 && fullTimeData1.map((item, index) => (
-                      <tr key={index}>
-                        <td>{(item.ARRIVETIME).slice(0,5)}</td>
-                        <td>{(fullTimeData2[index].ARRIVETIME)?.slice(0,5)}</td>
-                      </tr>
-                    ))}
+                    {fullTimeData1 &&
+                      fullTimeData1.map((item, index) => (
+                        <tr key={index}>
+                          <td>{item.ARRIVETIME.slice(0, 5)}</td>
+                          <td>
+                            {fullTimeData2 &&
+                              fullTimeData2[index]?.ARRIVETIME?.slice(0, 5)}
+                          </td>
+                        </tr>
+                      ))}
                   </tbody>
                 </table>
               </>
@@ -121,14 +134,16 @@ const FullTimetable = () => {
               <div className='loading'>
                 <div>현재 준비중입니다.</div>
                 <div>불편을 끼쳐드려서 죄송합니다.</div>
-                <div>빠른 시일 내에 원활하게 서비스 이용 가능하도록 하겠습니다.</div>
+                <div>
+                  빠른 시일 내에 원활하게 서비스 이용 가능하도록 하겠습니다.
+                </div>
               </div>
             )}
           </div>
         </div>
-      }
+      )}
     </div>
-  )
+  );
 }
 
 export default FullTimetable
