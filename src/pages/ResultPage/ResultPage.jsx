@@ -2,8 +2,16 @@ import { useState, useEffect } from "react";
 import "./ResultPage.css";
 import { useSearchParams } from "react-router-dom";
 import Stopover from "./component/Stopover";
-import KakaoMap from "../../common/KakaoMap";
+import KakaoMap from "../../common/KakaoMap/KakaoMap";
 import axios from "axios";
+import DepartureArrivalTime from "./component/DepartureArrivalTime/DepartureArrivalTime";
+import { useStationPositionQuery } from "../../hooks/useStationPosition";
+import { useRealtimePositionQuery } from '../../hooks/useRealtimePosition'
+import { calTime } from "../../utils/calTime";
+import ReportForm from "./component/ReportForm/ReportForm";
+
+const startIdx = 0
+const endIdx = 50
 
 const ResultPage = () => {
     const [query, setQuery] = useSearchParams();

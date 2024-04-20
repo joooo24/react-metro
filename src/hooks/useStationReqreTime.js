@@ -11,5 +11,6 @@ export const useStationReqreTimeQuery = ({ startIdx, endIdx, lineNm }) => {
         queryKey: ['station-via', { startIdx, endIdx, lineNm }],
         queryFn: () => fetchStationReqreTime({ startIdx, endIdx, lineNm }),
         select: (result) => result.data.StationDstncReqreTimeHm.row,
+        staleTime: 300000,
     })
 }

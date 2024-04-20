@@ -17,14 +17,23 @@ const FullTimetable = () => {
   // console.log('stationName',stationName);
   const [query, setQuery] = useSearchParams();
   const queryValue = query.get('q');
+  const exceptStation = queryValue.replace(/역$/, '');
+
   // Id값만 반환
-  const stationId = stationName?.find((item) => {
-      return queryValue === item.STATION_NM;
-    })?.STATION_CD;
-    // console.log('station',stationId);
+  // const stationId = stationName?.find((item) => {
+  //     return queryValue === item.STATION_NM;
+  //   })?.STATION_CD;
+
+    const stationId = stationName
+    ?.filter((item) => queryValue && exceptStation === item.STATION_NM)
+    .map((item) => item.STATION_CD);
+    console.log('station',stationId);
+
 
   const { data: fullTimeData1, isLoading1, isError1, error1 } = useStationFullTimeQuery({startIdx:1 , endIdx: 500, stationCd: stationId, week: week, inout: 1});
   const { data: fullTimeData2 } = useStationFullTimeQuery({startIdx:1 , endIdx: 500, stationCd: stationId, week: week, inout: 2});
+  // console.log('fullTimedata-->', fullTimeData1);
+
 
   //오늘 날짜 -> 요일 -> week값 
     function getToday() {
@@ -56,6 +65,7 @@ const FullTimetable = () => {
     setWeek(weekValue);
   }
 
+
   if (isLoading1) {
     return <div>정보를 받아오는 중입니다</div>;
   }
@@ -77,33 +87,43 @@ const FullTimetable = () => {
           }
         }}>
           <div className='content'>
-          <button className='modal-close-btn' onClick={() => setModalOpen(false)}>
-                <MdNavigateBefore />
-              </button>
-            <div className='full-timetable-title'>
-              {fullTimeData1?.[0].STATION_NM}역 {fullTimeData1?.[0].LINE_NUM}
-            </div>
-            <div className='full-timetable-date'>
-            <button onClick={() => handleWeekChange(1)}>평일</button>
-            <button onClick={() => handleWeekChange(2)}>토요일</button>
-            <button onClick={() => handleWeekChange(3)}>공휴일</button>
-            </div>
-            <table className='full-timetable'>
-              <thead>
-                <tr>
-                  <th>{fullTimeData1?.[0].SUBWAYSNAME} 방향</th>
-                  <th>{fullTimeData2?.[0].SUBWAYSNAME} 방향</th>
-                </tr>
-              </thead>
-              <tbody>
-              {fullTimeData2 && fullTimeData1?.map((item, index) => (
-                <tr key={index}>
-                  <td>{(item?.ARRIVETIME).slice(0,5)}</td>
-                  <td>{(fullTimeData2[index]?.ARRIVETIME)?.slice(0,5)}</td>
-                </tr>
-              ))}
-              </tbody>
-            </table>
+            <button className='modal-close-btn' onClick={() => setModalOpen(false)}>
+              <MdNavigateBefore />
+            </button>
+            {fullTimeData1 && fullTimeData1[0] && fullTimeData1[0].STATION_NM ? (
+              <>
+                <div className='full-timetable-title'>
+                  {fullTimeData1[0].STATION_NM}역 {fullTimeData1[0].LINE_NUM}
+                </div>
+                <div className='full-timetable-date'>
+                  <button onClick={() => handleWeekChange(1)}>평일</button>
+                  <button onClick={() => handleWeekChange(2)}>토요일</button>
+                  <button onClick={() => handleWeekChange(3)}>공휴일</button>
+                </div>
+                <table className='full-timetable'>
+                  <thead>
+                    <tr>
+                      <th>{fullTimeData1[0].SUBWAYSNAME} 방향</th>
+                      <th>{fullTimeData2[0].SUBWAYSNAME} 방향</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {fullTimeData2 && fullTimeData1.map((item, index) => (
+                      <tr key={index}>
+                        <td>{(item.ARRIVETIME).slice(0,5)}</td>
+                        <td>{(fullTimeData2[index].ARRIVETIME)?.slice(0,5)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </>
+            ) : (
+              <div className='loading'>
+                <div>현재 준비중입니다.</div>
+                <div>불편을 끼쳐드려서 죄송합니다.</div>
+                <div>빠른 시일 내에 원활하게 서비스 이용 가능하도록 하겠습니다.</div>
+              </div>
+            )}
           </div>
         </div>
       }

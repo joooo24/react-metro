@@ -11,12 +11,20 @@ import line5Imag from "../../../../assets/images/line/line5.png";
 import line6Imag from "../../../../assets/images/line/line6.png";
 import line7Imag from "../../../../assets/images/line/line7.png";
 import line8Imag from "../../../../assets/images/line/line8.png";
+import { useStationReqreAllQuery } from "../../../../hooks/useStationReqreAll";
 
 const SearchForm = () => {
-    const { data: stationName } = useStationNameInfoQuery({
+    const { data: fullStationName } = useStationNameInfoQuery({
         startIdx: 1,
         endIdx: 800,
     });
+    // console.log('fullStationName', fullStationName);
+    const { data: stationName } = useStationReqreAllQuery({
+        startIdx: 1,
+        endIdx: 300,
+    });
+    // console.log('stationName', stationName);
+
     const [selectInput, setSelectInput] = useState({
         depart: "",
         arrive: "",
@@ -25,7 +33,6 @@ const SearchForm = () => {
         departLine: "",
         arriveLine: "",
     });
-
     const navigate = useNavigate();
 
     const onChange = (e) => {
@@ -51,11 +58,18 @@ const SearchForm = () => {
         navigate(`/arrival-result?${queryStringParams}`);
     };
 
-    const stationNameInfo = stationName?.map((station) => ({
-        label: station.STATION_NM,
-        value: station.STATION_NM,
+    // 출발역, 도착역 options값 중복 제거
+    const uniqueStationNames = [
+        ...new Set(stationName?.map((station) => station.STATN_NM)),
+    ];
+    console.log("unipque", uniqueStationNames);
+
+    const stationNameInfo = uniqueStationNames?.map((station) => ({
+        label: station,
+        value: station,
     }));
 
+    // react-select 라이브러리 custom
     const customStyles = {
         control: (provided, state) => ({
             ...provided,
@@ -63,7 +77,7 @@ const SearchForm = () => {
             backgroundColor: "transparent",
             borderRadius: "4px",
             width: "100%",
-            height: "30px",
+            height: "60px",
             display: "flex",
             boxShadow: "none",
             textAlign: "center",
@@ -80,26 +94,24 @@ const SearchForm = () => {
             ...provided,
             display: "flex",
             flexWrap: "wrap",
-            maxHeight: "200px", // 드롭다운 메뉴의 최대 높이를 지정합니다.
-            overflowY: "auto", // 세로 스크롤을 추가합니다.
+            maxHeight: "200px",
+            overflowY: "auto",
         }),
         option: (provided, state) => ({
             ...provided,
-            // display: 'flex',
-            // justifyContent: 'center',
-            // alignItems: 'center',
             width: "100%",
             boxSizing: "border-box",
         }),
         dropdownIndicator: (provided, state) => ({
             ...provided,
-            display: "none", // 드롭다운 버튼을 숨깁니다.
+            display: "none",
         }),
     };
 
+    // line option 선택
     const lineOptions = [
         {
-            value: "1호선",
+            value: "01호선",
             label: (
                 <>
                     <img className="line-img" src={line1Imag} alt="" />
@@ -108,7 +120,7 @@ const SearchForm = () => {
             ),
         },
         {
-            value: "2호선",
+            value: "02호선",
             label: (
                 <>
                     <img className="line-img" src={line2Imag} alt="" />
@@ -117,7 +129,7 @@ const SearchForm = () => {
             ),
         },
         {
-            value: "3호선",
+            value: "03호선",
             label: (
                 <>
                     <img className="line-img" src={line3Imag} alt="" />
@@ -126,7 +138,7 @@ const SearchForm = () => {
             ),
         },
         {
-            value: "4호선",
+            value: "04호선",
             label: (
                 <>
                     <img className="line-img" src={line4Imag} alt="" />
@@ -135,7 +147,7 @@ const SearchForm = () => {
             ),
         },
         {
-            value: "5호선",
+            value: "05호선",
             label: (
                 <>
                     <img className="line-img" src={line5Imag} alt="" />
@@ -144,7 +156,7 @@ const SearchForm = () => {
             ),
         },
         {
-            value: "6호선",
+            value: "06호선",
             label: (
                 <>
                     <img className="line-img" src={line6Imag} alt="" />
@@ -153,7 +165,7 @@ const SearchForm = () => {
             ),
         },
         {
-            value: "7호선",
+            value: "07호선",
             label: (
                 <>
                     <img className="line-img" src={line7Imag} alt="" />
@@ -162,7 +174,7 @@ const SearchForm = () => {
             ),
         },
         {
-            value: "8호선",
+            value: "08호선",
             label: (
                 <>
                     <img className="line-img" src={line8Imag} alt="" />
@@ -172,10 +184,44 @@ const SearchForm = () => {
         },
     ];
 
+    const departStation = stationNameInfo?.find(
+        (option) => option.value === selectInput.depart
+    );
+    const arriveStation = stationNameInfo?.find(
+        (option) => option.value === selectInput.arrive
+    );
+    // console.log('depart', departStation);
+    // console.log('arrive', arriveStation);
+
+    const departValue = fullStationName
+        ?.filter((item) => item.STATION_NM === departStation?.value)
+        ?.map((item) => item.LINE_NUM);
+    const arriveValue = fullStationName
+        ?.filter((item) => item.STATION_NM === arriveStation?.value)
+        ?.map((item) => item.LINE_NUM);
+    // console.log('departValue', departValue);
+    // console.log('arriveValue', arriveValue);
+
+    const departLineOptions = lineOptions
+        ?.filter((item) => departValue?.includes(item.value))
+        ?.map((filteredItem) => ({
+            value: filteredItem.value,
+            label: filteredItem.label,
+        }));
+    const arriveLineOptions = lineOptions
+        ?.filter((item) => arriveValue?.includes(item.value))
+        ?.map((filteredItem) => ({
+            value: filteredItem.value,
+            label: filteredItem.label,
+        }));
+    // console.log(departLineOptions);
+    // console.log(arriveLineOptions);
+
     return (
         <div className="main-search-form">
             <h1>FIND YOUR SUB-WAY</h1>
             <span>출발/도착역과 호선 정보를 입력해주세요.</span>
+            <p>1~8호선까지의 역만 입력 가능합니다.</p>
             <form action="" className="search-input" onSubmit={searchSubway}>
                 <div>
                     <Select
@@ -183,9 +229,7 @@ const SearchForm = () => {
                         className="select-name"
                         placeholder="출발역을 입력해주세요."
                         name="depart"
-                        value={stationNameInfo?.find(
-                            (option) => option.value === selectInput.depart
-                        )}
+                        value={departStation}
                         onChange={onChangeSelect}
                         options={stationNameInfo}
                         required
@@ -194,6 +238,7 @@ const SearchForm = () => {
                             DropdownIndicator: () => null,
                         }}
                     />
+
                     <Select
                         styles={customStyles}
                         className="select-line"
@@ -209,7 +254,7 @@ const SearchForm = () => {
                                 },
                             })
                         }
-                        options={lineOptions}
+                        options={departLineOptions}
                         required
                         components={{
                             IndicatorSeparator: () => null,
@@ -223,9 +268,7 @@ const SearchForm = () => {
                         className="select-name"
                         placeholder="도착역을 입력해주세요."
                         name="arrive"
-                        value={stationNameInfo?.find(
-                            (option) => option.value === selectInput.arrive
-                        )}
+                        value={arriveStation}
                         onChange={onChangeSelect}
                         options={stationNameInfo}
                         required
@@ -239,7 +282,7 @@ const SearchForm = () => {
                         className="select-line"
                         name="arriveLine"
                         value={lineOptions.find(
-                            (option) => option.value === inputs.arriveLine
+                            (option) => option.value === inputs.arrivetLine
                         )}
                         onChange={(selectedOption) =>
                             onChange({
@@ -249,7 +292,7 @@ const SearchForm = () => {
                                 },
                             })
                         }
-                        options={lineOptions}
+                        options={arriveLineOptions}
                         required
                         components={{
                             IndicatorSeparator: () => null,

@@ -11,5 +11,6 @@ export const useRealtimePositionQuery = ({ startIdx, endIdx, statnNm }) => {
         queryKey: ['station-arrival', { startIdx, endIdx, statnNm }],
         queryFn: () => fetchRealtimePosition({ startIdx, endIdx, statnNm }),
         select: (result) => result.data.realtimeArrivalList,
+        staleTime: 300000,
     })
 }
