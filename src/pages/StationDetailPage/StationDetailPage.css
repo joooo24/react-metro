@@ -31,16 +31,22 @@
     font-size: 16px;
     margin: 0 auto;
 }
-.station-name{
+
+.station-name {
     padding: 16px 20px;
 }
-.station-name.current{
-    border: 1px solid #000;
+
+.station-name.current {
+    background-color: #E9F2FF;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 20px;
     padding: 16px 20px;
+}
+
+.station-name.current svg {
+    margin-left: 4px;
 }
 
 .arr-start-end {
@@ -162,7 +168,8 @@
     .map-wrap {
         height: 360px;
     }
-    .station-name{
+
+    .station-name {
         padding: 0;
     }
 

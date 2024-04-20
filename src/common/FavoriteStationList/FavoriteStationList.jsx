@@ -1,11 +1,11 @@
 import React from "react";
 import { MdClose } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
-import { removeFromFavorites } from "../../../actions/favoritesActions";
+import { removeFromFavorites } from "../../store/favoritesSlice";
 import "./FavoriteStationList.css";
 
 const FavoriteStationList = () => {
-    const favorites = useSelector((state) => state.favorites);
+    const favorites = useSelector((state) => state.favorites.favorites);
     const dispatch = useDispatch();
 
     const handleRemoveFavorite = (stationName) => {

@@ -5,7 +5,7 @@ import search from "../../assets/images/menusearch.svg";
 import login from "../../assets/images/login.svg";
 import star from "../../assets/images/star.svg";
 import { Link, useNavigate } from "react-router-dom";
-import FavoriteStationList from "./FavoriteStationList/FavoriteStationList";
+import FavoriteStationList from "../../common/FavoriteStationList/FavoriteStationList";
 
 const Header = ({auth, setAuth}) => {
     const [station, setStation] = useState("");

@@ -5,10 +5,10 @@ import { useDispatch, useSelector } from "react-redux";
 import {
     addToFavorites,
     removeFromFavorites,
-} from "../../../../actions/favoritesActions";
+} from "../../../../store/favoritesSlice";
 
 const StationList = ({ currentStation }) => {
-    const favorites = useSelector((state) => state.favorites);
+    const favorites = useSelector((state) => state.favorites.favorites);
     const dispatch = useDispatch();
     const isFavorite = favorites.includes(currentStation);
 
@@ -23,8 +23,11 @@ const StationList = ({ currentStation }) => {
     return (
         <div className="station-list">
             <div className="station-name">역 이름</div>
-            <div className="station-name" onClick={handleToggleFavorite}>
-                {currentStation}{" "}
+            <div
+                className="station-name current"
+                onClick={handleToggleFavorite}
+            >
+                {currentStation}
                 {isFavorite ? <MdFavorite /> : <MdFavoriteBorder />}
             </div>
             <div className="station-name">역 이름</div>
