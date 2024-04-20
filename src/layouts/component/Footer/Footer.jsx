@@ -1,11 +1,18 @@
 import React from 'react'
 import './Footer.css';
+import { useNavigate } from 'react-router-dom';
 import { FaGithub } from "react-icons/fa";
 import { IoLogoInstagram } from "react-icons/io5";
 import { FaFacebookSquare } from "react-icons/fa";
 import { IoLogoYoutube } from "react-icons/io";
 import { FaTwitter } from "react-icons/fa";
+import { Link } from 'react-router-dom';
+
 const Footer = () => {
+// const navigate = useNavigate();
+// const incorrect = () => {
+//     navigate('/admin/incorrectInfo');
+// }
   return (
     <div className='footer'>
         <div className='social-networks'>
@@ -15,16 +22,32 @@ const Footer = () => {
         
         <div className='links'>
             <ul>
+                <div>We are..</div>
                 <li>Home</li>
                 <li>Information</li>
                 <li>Contact</li>
-                <li>Products</li>
                 <li>Our Team</li>
             </ul>
+            <ul>
+                <div>Products</div>
+                <li>JavaScript</li>
+                <li>React</li>
+                <li>React-Router</li>
+                <li>React-Select</li>
+
+            </ul>
+            <ul>
+                <div>고객지원</div>
+                <li className='incorrect-info'>
+                    <Link to='/admin/incorrectInfo'>잘못된 정보 신고</Link>
+                </li>
+                <li>Help</li>
+            </ul>
+
         </div>
 
         <div className='copyright'>
-            © 2024 Copyright: 코딩알려주는누나 react-study-3조
+            © 2024 Copyright: 코딩알려주는누나 react study 3조
         </div>
     </div>
 

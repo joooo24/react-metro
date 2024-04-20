@@ -9,6 +9,7 @@ import LoginPage from "./pages/LoginPage/LoginPage"
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import AdminPage from "./pages/AdminPage/AdminPage";
+import ErrorPage from './pages/ErrorPage';
 
 function App() {
     const [auth, setAuth]=useState(false);
@@ -22,6 +23,7 @@ function App() {
                 <Route path="arrival-result" element={<ResultPage />} />
                 <Route path="station-detail" element={<StationDetailPage />} />
                 <Route path="admin" element={<AdminPage />} />
+                <Route path="admin/incorrectInfo" element={<ErrorPage />} />
             </Route>
             <Route path="*" element={<NotFoundPage />} />
         </Routes>
