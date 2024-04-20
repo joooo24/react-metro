@@ -49,14 +49,14 @@ const ArrivalInfo = ({ currentStation }) => {
         FR_CODE: stationNameInfo?.FR_CODE,
     });
 
-    console.log(
-        "LINE_NUM",
-        replaceLINE_NUM,
-        "STATION_CD",
-        stationNameInfo?.STATION_CD,
-        "FR_CODE",
-        stationNameInfo?.FR_CODE
-    );
+    // console.log(
+    //     "LINE_NUM",
+    //     replaceLINE_NUM,
+    //     "STATION_CD",
+    //     stationNameInfo?.STATION_CD,
+    //     "FR_CODE",
+    //     stationNameInfo?.FR_CODE
+    // );
 
     console.log("stationArrivalData", stationArrivalData);
 
