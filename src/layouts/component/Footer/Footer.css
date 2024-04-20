@@ -27,13 +27,14 @@ a {
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    padding: 20px 50px;
+    padding: 20px 250px;
 }
 
 .social-networks {
     font-size: 20px;
     width: 100%;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
     padding-bottom: 20px;
     border-bottom: 1px solid black;
@@ -52,6 +53,7 @@ a {
 .links {
     width: 100%;
     display: flex;
+    flex-wrap: wrap;
     justify-content: flex-start;
     align-items: flex-start;
 
@@ -81,4 +83,69 @@ a {
 .copyright {
     font-weight: 500;
     font-size: 14px;
+}
+
+@media screen and (max-width: 768px) {
+    .footer {
+        height: auto;
+        padding: 50px;
+    }
+    
+    .social-networks {
+        font-size: 16px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding-bottom: 20px;
+        border-bottom: 1px solid black;
+        font-weight: 400;
+    }
+
+    .social-networks span {
+        margin-bottom: 20px;
+    }
+    
+    .social-networks .img {
+        margin-right: 18px;
+    }
+    
+    .social-networks .img:hover {
+        color: rgb(96, 96, 96);
+    }
+    
+    .links {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-top: 20px;
+    }
+    
+    .links ul {
+        margin-right: 0;
+        margin-bottom: 40px;
+    }
+    
+    .links ul div {
+        font-size: 18px;
+        font-weight: 500;
+        margin-bottom: 18px;
+    }
+    
+    .links ul li {
+        font-size: 12px;
+        margin-bottom: 10px;
+        cursor: pointer;
+    }
+    
+    .links ul li:hover {
+        color: gray;
+        font-size: 700;
+    }
+    
+    .copyright {
+        font-weight: 500;
+        font-size: 10px;
+    }
+
 }
