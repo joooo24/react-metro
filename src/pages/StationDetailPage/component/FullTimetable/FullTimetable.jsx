@@ -7,6 +7,7 @@ import { useStationFullTimeQuery } from '../../../../hooks/useStationFullTIme';
 import { useSearchParams } from 'react-router-dom';
 import { useStationNameInfoQuery } from '../../../../hooks/useStationNameInfo';
 import { MdNavigateBefore } from "react-icons/md";
+import sorry from '../../../../assets/images/sorry.png';
 
 const FullTimetable = () => {
   const [modalOpen, setModalOpen] = useState(false);
@@ -15,7 +16,7 @@ const FullTimetable = () => {
 
   const [query, setQuery] = useSearchParams();
   const queryValue = query.get('q');
-  const exceptStation = queryValue.replace(/역$/, '');
+  // const exceptStation = queryValue.replace(/역$/, '');
 
   const { data: stationName } = useStationNameInfoQuery({ startIdx: 1, endIdx: 800 });
 
@@ -28,13 +29,13 @@ const FullTimetable = () => {
       selectedStations?.push(station);
     }
   });
-  // console.log(selectedStations);
+  console.log(selectedStations);
 
-  const stationId = selectedStations?.filter((item) => queryValue && exceptStation === item.STATION_NM).map((item) => item.STATION_CD);
+  const stationId = selectedStations?.filter((item) => queryValue === item.STATION_NM).map((item) => item.STATION_CD);
   // console.log('station', stationId);
 
   const { data: fullTimeData1, isLoading1, isError1, error1 } = useStationFullTimeQuery({ startIdx: 1, endIdx: 500, stationCd: stationId?.[0] || stationId?.[1], week: week, inout: 1 });
-  const { data: fullTimeData2 } = useStationFullTimeQuery({ startIdx: 1, endIdx: 500, stationCd: stationId?.[0] || stationId?.[1], week: week, inout: 2 });
+  const { data: fullTimeData2, isLoading2, isError2, error2 } = useStationFullTimeQuery({ startIdx: 1, endIdx: 500, stationCd: stationId?.[0] || stationId?.[1], week: week, inout: 2 });
   // console.log('fullTimedata1-->', fullTimeData1);
   // console.log('fullTimedata2-->', fullTimeData2);
 
@@ -77,6 +78,14 @@ const FullTimetable = () => {
     return <Alert variant='danger'>{error1.message}</Alert>;
   }
 
+  if (isLoading2) {
+    return <div>정보를 받아오는 중입니다</div>;
+  }
+
+  if (isError2) {
+    return <Alert variant='danger'>{error2.message}</Alert>;
+  }
+
   return (
     <div>
       <button onClick={() => setModalOpen(true)}>전체 시간표 보기</button>
@@ -97,12 +106,10 @@ const FullTimetable = () => {
             >
               <MdNavigateBefore />
             </button>
-            {fullTimeData1 &&
-            fullTimeData1[0] &&
-            fullTimeData1[0].STATION_NM ? (
+            {fullTimeData1 && fullTimeData1[0]?.STATION_NM ? (
               <>
                 <div className='full-timetable-title'>
-                  {fullTimeData1[0].STATION_NM}역 {fullTimeData1[0].LINE_NUM}
+                  {fullTimeData1[0]?.STATION_NM}역 {fullTimeData1[0]?.LINE_NUM}
                 </div>
                 <div className='full-timetable-date'>
                   <button onClick={() => handleWeekChange(1)}>평일</button>
@@ -112,18 +119,16 @@ const FullTimetable = () => {
                 <table className='full-timetable'>
                   <thead>
                     <tr>
-                      <th>{fullTimeData1[0].SUBWAYSNAME} 방향</th>
-                      <th>{fullTimeData2[0].SUBWAYSNAME} 방향</th>
+                      <th>{fullTimeData1[0]?.SUBWAYSNAME} 방향</th>
+                      <th>{fullTimeData2[0]?.SUBWAYSNAME} 방향</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {fullTimeData1 &&
-                      fullTimeData1.map((item, index) => (
+                    {fullTimeData1?.map((item, index) => (
                         <tr key={index}>
-                          <td>{item.ARRIVETIME.slice(0, 5)}</td>
+                          <td>{item.ARRIVETIME?.slice(0, 5)}</td>
                           <td>
-                            {fullTimeData2 &&
-                              fullTimeData2[index]?.ARRIVETIME?.slice(0, 5)}
+                            {fullTimeData2[index]?.ARRIVETIME?.slice(0, 5)}
                           </td>
                         </tr>
                       ))}
@@ -132,10 +137,15 @@ const FullTimetable = () => {
               </>
             ) : (
               <div className='loading'>
-                <div>현재 준비중입니다.</div>
+                <div>
+                  <img src={sorry} alt="" />
+                </div>
+                <div>
+                  <div className='query-value'>[ {queryValue}역 ]</div>은 현재 준비중입니다.
+                </div>
                 <div>불편을 끼쳐드려서 죄송합니다.</div>
                 <div>
-                  빠른 시일 내에 원활하게 서비스 이용 가능하도록 하겠습니다.
+                  빠른 시일 내에 원활한 서비스 이용이 가능하도록 최선을 다하겠습니다.
                 </div>
               </div>
             )}
