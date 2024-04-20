@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { MdFavoriteBorder, MdFavorite } from "react-icons/md";
 import { useDispatch, useSelector } from "react-redux";
 import { Alert } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
 import {
     addToFavorites,
     removeFromFavorites,
@@ -9,6 +10,7 @@ import {
 import { useStationNameInfoQuery } from "../../../../hooks/useStationNameInfo";
 
 const StationList = ({ currentStation }) => {
+    const navigate = useNavigate();
     const {
         data: stationName,
         isLoading,
@@ -79,6 +81,11 @@ const StationList = ({ currentStation }) => {
         }
     };
 
+    // 이동
+    const handleStationClick = (stationName) => {
+        navigate(`/station-detail?q=${encodeURIComponent(stationName)}`);
+    };
+
     if (isLoading) {
         return <div>정보를 받아오는 중입니다</div>;
     }
@@ -90,7 +97,12 @@ const StationList = ({ currentStation }) => {
     return (
         <div className="station-list">
             {prevStation && (
-                <div className="station-name">{prevStation.STATION_NM}</div>
+                <div
+                    className="station-name"
+                    onClick={() => handleStationClick(prevStation.STATION_NM)}
+                >
+                    {prevStation.STATION_NM}
+                </div>
             )}
             <div
                 className="station-name current"
@@ -100,7 +112,12 @@ const StationList = ({ currentStation }) => {
                 {isFavorite ? <MdFavorite /> : <MdFavoriteBorder />}
             </div>
             {nextStation && (
-                <div className="station-name">{nextStation.STATION_NM}</div>
+                <div
+                    className="station-name"
+                    onClick={() => handleStationClick(nextStation.STATION_NM)}
+                >
+                    {nextStation.STATION_NM}
+                </div>
             )}
         </div>
     );

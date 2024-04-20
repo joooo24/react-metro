@@ -8,7 +8,7 @@ import "./FavoriteStationList.css";
 const FavoriteStationList = () => {
     const favorites = useSelector((state) => state.favorites.favorites);
     const dispatch = useDispatch();
-    const navigate = useNavigate(); // useNavigate 훅 사용
+    const navigate = useNavigate();
 
     const handleRemoveFavorite = (stationName) => {
         dispatch(removeFromFavorites(stationName));
