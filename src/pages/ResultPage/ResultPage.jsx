@@ -42,8 +42,8 @@ const ResultPage = () => {
     }, [statnPosDB])
 
     const FindDepartTime = (ArrivalList) => {
-        let recptnDt = new Date(ArrivalList[0]?.recptnDt)
-        let barvlDt = parseInt(ArrivalList[0]?.barvlDt)
+        let recptnDt = new Date(ArrivalList[2]?.recptnDt)
+        let barvlDt = parseInt(ArrivalList[2]?.barvlDt)
         let result = calTime(recptnDt, barvlDt)
         console.log("출발시간 결과 : ", result)
         return result
