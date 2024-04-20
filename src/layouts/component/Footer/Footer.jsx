@@ -39,7 +39,7 @@ const Footer = () => {
             <ul>
                 <div>고객지원</div>
                 <li className='incorrect-info'>
-                    <Link to='/admin/incorrectInfo'>잘못된 정보 신고</Link>
+                    <Link to='/incorrectInfo'>잘못된 정보 신고</Link>
                 </li>
                 <li>Help</li>
             </ul>
