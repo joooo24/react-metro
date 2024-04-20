@@ -1,5 +1,14 @@
 
 .favorite-list-modal{
+ position: fixed;
+ width: 100vw;
+ height: 100vh;
+ left: 0;
+ top: 0;
+ background-color: rgba(0, 0, 0, 0.226);
+ z-index: 100;
+}
+.favorite-list-modal .favorite-list-inner{
     position: absolute;
     left: 50%;
     top: 50%;
@@ -7,12 +16,12 @@
     width: 60vw;
     height: auto;
     max-height: 80vh;
-    z-index: 100%;
     padding: 30px;
     text-align: center;
     background-color: #fff;
     border-radius: 20px;
     box-shadow: 0 0 10px 10px #00000022;
+
 }
 .favorite-list-modal .header-bookmark{
     font-size: 24px;

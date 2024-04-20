@@ -269,8 +269,10 @@ const Header = ({ auth, setAuth }) => {
             {showFavoriteList ? (
                
                 <div className="favorite-list-modal">
+                    <div className="favorite-list-inner">
                     <MdClose className="btn-close" onClick={() => setShowFavoriteList(false)}/>
                     <FavoriteStationList />
+                    </div>
                 </div>
             ) : null}
         </div>
