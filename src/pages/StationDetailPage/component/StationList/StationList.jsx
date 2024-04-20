@@ -12,6 +12,18 @@ const StationList = ({ currentStation }) => {
         statnNm: currentStation 
     });
 
+    const RealtimeStationPostion = (currentStation)=>{
+        if(Array.isArray(stationPosition)){
+            const findStation = stationPosition.find(
+                (station) => station.statnNm === currentStation
+            );
+            setRealtimeStation(findStation || {});
+        }
+    }
+    useEffect(() => {
+        RealtimeStationPostion();
+    }, [stationPosition]);
+
     if (isLoading) {
         return <div>Loading...</div>;
     }
@@ -21,7 +33,6 @@ const StationList = ({ currentStation }) => {
     }
 
     console.log(realtimeStation)
-    console.log(stationPosition?.statnNm)
     return (
         <div className="station-list">
             <div className="station-name">역 이름</div>
