@@ -8,6 +8,7 @@ import StationDetailPage from "./pages/StationDetailPage/StationDetailPage";
 import LoginPage from "./pages/LoginPage/LoginPage"
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
+import AdminPage from "./pages/AdminPage/AdminPage";
 
 function App() {
     const [auth, setAuth]=useState(false);
@@ -20,6 +21,7 @@ function App() {
                 <Route path="/login" element={<LoginPage setAuth={setAuth} />}/>
                 <Route path="arrival-result" element={<ResultPage />} />
                 <Route path="station-detail" element={<StationDetailPage />} />
+                <Route path="admin" element={<AdminPage />} />
             </Route>
             <Route path="*" element={<NotFoundPage />} />
         </Routes>
