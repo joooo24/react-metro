@@ -39,6 +39,13 @@ textarea:active {
   margin-bottom: 15px;
 }
 
+.main-search-form p {
+  font-family: "Noto Sans KR", sans-serif;
+  color: #c57a7a;
+  font-size: 16px;
+  margin-bottom: 15px;
+}
+
 .search-input {
     width: 100%;
     display: flex;
