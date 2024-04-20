@@ -87,8 +87,8 @@ const FullTimetable = () => {
   }
 
   return (
-    <div>
-      <button onClick={() => setModalOpen(true)}>전체 시간표 보기</button>
+    <div >
+      <button onClick={() => setModalOpen(true)} className='btn-full-time-table'>전체 시간표 보기</button>
       {modalOpen && (
         <div
           className='modal-container'
