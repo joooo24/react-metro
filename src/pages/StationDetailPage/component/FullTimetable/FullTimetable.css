@@ -103,3 +103,21 @@ tbody {
     justify-content: center;
     align-items: center;
 }
+
+.loading div {
+    margin-bottom: 10px;
+}
+
+.loading div img {
+    display: block;
+    width: auto;
+    height: 150px;
+    margin-bottom: 10px;
+}
+
+.query-value {
+    display: inline-block;
+    font-weight: 700;
+    color: rgb(183, 0, 0);
+
+}
