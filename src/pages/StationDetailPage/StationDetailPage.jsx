@@ -51,7 +51,7 @@ const StationDetailPage = () => {
                 <div className="map-wrap">지도</div>
                 <div className="station-information">
                     {/* 역 리스트 */}
-                    <StationList realtimeStation={realtimeStation} />
+                    <StationList currentStation={currentStation} />
             
                     {/* 도착정보 */}
                     <ArrivalInfo currentStation={currentStation} />
