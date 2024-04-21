@@ -53,7 +53,7 @@ const ResultPage = () => {
     const { data: departLineStatnList } = useStationReqreTimeQuery({ startIdx, endIdx, lineNm: departLine })
     const { data: arriveLineStatnList } = useStationReqreTimeQuery({ startIdx, endIdx, lineNm: arriveLine })
     console.log("ddd", departLineStatnList)
-    console.log("aaa", arriveLineStatnList)
+    console.log("aaa", arriveLine, arriveLineStatnList)
 
     if (departLine == arriveLine && statnPosDB) {
         let startIndex = departLineStatnList?.findIndex(station => station.STATN_NM.includes(departStatnNm))
