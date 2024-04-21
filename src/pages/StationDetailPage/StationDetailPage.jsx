@@ -1,4 +1,4 @@
-import React,{useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import StationAddressInfo from "./component/StationAddressInfo/StationAddressInfo";
 import ArrivalInfo from "./component/ArrivalInfo/ArrivalInfo";
@@ -8,25 +8,39 @@ import "./StationDetailPage.css";
 import FullTimetable from './component/FullTimetable/FullTimetable';
 import { useRealtimePositionQuery } from "../../hooks/useRealtimePosition";
 import FullSubwayMap from "./component/FullSubwayMap/FullSubwayMap";
+import { useStationPositionQuery } from "../../hooks/useStationPosition";
+import KakaoMap from "../../common/KakaoMap/KakaoMap";
 
 const StationDetailPage = () => {
     // eslint-disable-next-line
     const [query, setQuery] = useSearchParams();
     const currentStation = query.get("q");
 
-    const [realtimeStation, setRealtimeStation]= useState();
-    const { data:stationPosition, isLoading, isError, error } = useRealtimePositionQuery({
+    let kakaoStatnNm = currentStation.replace(/역$/, '');
+    const [statnLat, setStatnLat] = useState()
+    const [statnLng, setStatnLng] = useState()
+    const { data: statnPosDB, isLoading: DBLoading, isError: DBisError, error: DBError } = useStationPositionQuery()
+
+    useEffect(() => {
+        const statnPosition = statnPosDB?.find(station => station.StatnNm === kakaoStatnNm)
+        setStatnLat(statnPosition?.lat)
+        setStatnLng(statnPosition?.lng)
+    }, [statnPosDB, kakaoStatnNm])
+
+
+    const [realtimeStation, setRealtimeStation] = useState();
+    const { data: stationPosition, isLoading, isError, error } = useRealtimePositionQuery({
         startIdx: 0,
         endIdx: 50,
         statnNm: currentStation
     });
 
-   //-------------------서울지하철노선도 모달------------------------
-    const [fullSubwayMap, setFullSubwayMap ] =useState(false);
-    if(fullSubwayMap){
-        document.body.style.overflow="hidden";
-    }else{
-        document.body.style.overflow="auto";
+    //-------------------서울지하철노선도 모달------------------------
+    const [fullSubwayMap, setFullSubwayMap] = useState(false);
+    if (fullSubwayMap) {
+        document.body.style.overflow = "hidden";
+    } else {
+        document.body.style.overflow = "auto";
     }
 
     useEffect(() => {
@@ -36,37 +50,39 @@ const StationDetailPage = () => {
             );
             setRealtimeStation(foundStation || {});
         }
-    }, [isLoading, isError,stationPosition, currentStation]);
+    }, [isLoading, isError, stationPosition, currentStation]);
 
-    if(isLoading){
+    if (isLoading) {
         return (<h2>잠시만기다려주세요...</h2>)
     }
-    if(isError){
+    if (isError) {
         return (<h2>{error.message}</h2>)
     }
 
     return (
         <>
             <div className="station-detail-page">
-                <div className="map-wrap">지도</div>
+                <div className="map-wrap">
+                    <KakaoMap statnLat={statnLat} statnLng={statnLng} />
+                </div>
                 <div className="station-information">
                     {/* 역 리스트 */}
                     <StationList currentStation={currentStation} />
-            
+
                     {/* 도착정보 */}
                     <ArrivalInfo currentStation={currentStation} />
                     <FullTimetable />
-                    <button className="btn-show-station" onClick={()=>setFullSubwayMap(true)}>지하철 노선도 보기</button>
-                    {fullSubwayMap? <FullSubwayMap setFullSubwayMap={setFullSubwayMap}/> : null}
-                
+                    <button className="btn-show-station" onClick={() => setFullSubwayMap(true)}>지하철 노선도 보기</button>
+                    {fullSubwayMap ? <FullSubwayMap setFullSubwayMap={setFullSubwayMap} /> : null}
+
                     {/* 실시간 도착정보 */}
                     <RealTimeInfo realtimeStation={realtimeStation} />
-            
+
                     {/* 역 주소 */}
                     <StationAddressInfo currentStation={currentStation} />
                 </div>
             </div>
-            
+
         </>
     );
 };

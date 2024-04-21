@@ -37,11 +37,19 @@ const Footer = () => {
 
             </ul>
             <ul>
-                <div>고객지원</div>
+                <div>Support</div>
                 <li className='incorrect-info'>
-                    <Link to='/admin/incorrectInfo'>잘못된 정보 신고</Link>
+                    <Link to='/incorrectInfo'>잘못된 정보 신고</Link>
                 </li>
+                <li>Privacy Policy</li>
                 <li>Help</li>
+            </ul>
+            <ul>
+                <div>Manager</div>
+                <li className='incorrect-info'>
+                    <Link to='/admin'>Admin</Link>
+                </li>
+                <li>Info</li>
             </ul>
 
         </div>

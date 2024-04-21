@@ -1,12 +1,26 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import favoritesReducer from "./favoritesSlice";
 import authenticateReducer from "./authenticateReducer";
+import reportsReducer from "./reportsSlice";
+import storage from "redux-persist/lib/storage";
+import { persistReducer, persistStore } from "redux-persist";
 
-const store = configureStore({
-    reducer: {
-        favorites: favoritesReducer,
-        auth: authenticateReducer,
-    },
+const rootReducer = combineReducers({
+    favorites: favoritesReducer,
+    auth: authenticateReducer,
+    reports: reportsReducer,
 });
 
-export default store;
+const persistConfig = {
+    key: "root",
+    storage,
+    whitelist: ["reports"],
+};
+
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+export const store = configureStore({
+    reducer: persistedReducer,
+});
+
+export const persistor = persistStore(store);
