@@ -1,5 +1,6 @@
+
 .header-fixed-space {
-    height: 100%;
+    height: 90px;
 }
 .header-wrapper {
     position: fixed;
@@ -96,6 +97,9 @@
 }
 
 @media screen and (max-width: 768px) {
+    .header-fixed-space {
+        height: 70px;
+    }
     .header-wrapper {
         height: 70px;
     }
