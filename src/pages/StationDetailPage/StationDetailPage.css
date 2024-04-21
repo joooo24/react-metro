@@ -77,8 +77,7 @@
     font-weight: bold;
 }
 
-.arr-start-end .time {
-}
+.arr-start-end .time {}
 
 /* Full-Timetable */
 .btn-full-time-table {
@@ -86,6 +85,7 @@
     font-size: 14px;
     margin-bottom: 5px;
 }
+
 .arr-start-end li:last-child {
     margin-left: 20px;
     cursor: pointer;
@@ -173,6 +173,15 @@
     .station-detail-page {
         flex-direction: column;
         padding: 100px 16px 20px;
+    }
+
+    .station-address,
+    .arr-real-time {
+        padding: 30px 20px;
+    }
+    .arr-start-end {
+    justify-content: flex-start;
+    padding: 30px 20px;   
     }
     .station-list {
         width: 100%;

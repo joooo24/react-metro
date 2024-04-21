@@ -229,5 +229,6 @@
     }
     .header-bookmark-contents li p {
         cursor: pointer;
+        font-size: 12px;
     }
 }
