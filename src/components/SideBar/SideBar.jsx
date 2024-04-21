@@ -1,7 +1,9 @@
 import React,{useState} from "react";
 import "./SideBar.css";
 import sidebarMainImg from "../../assets/images/sidebar-main-img.svg";
-import leftArrow from "../../assets/images/left-arrow.svg"
+import leftArrow from "../../assets/images/left-arrow.svg";
+import sidebartitle from "../../assets/images/sidebar-title.svg";
+import sidebarnotitle from "../../assets/images/siddbar-notitle.svg"
 
 
 const SideBar =()=>{
@@ -17,9 +19,9 @@ const SideBar =()=>{
     <div className={`sidebar ${sideBar ? '' : 'closed'}`}>
         <div className="sidebar-wrapper">
             <div className="sidebar-wrapper-area">
-                <h1 className="sidebar-title">열차타요</h1>
+                {/* <h1 className="sidebar-title">열차타요</h1> */}
                 <div className="sidebar-img-area">
-                    <img src={sidebarMainImg} alt="메인이미지" />
+                    <img src={sidebartitle} alt="메인이미지" />
                 </div>
             </div>
         </div>
