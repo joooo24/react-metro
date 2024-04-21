@@ -13,16 +13,21 @@ const ReceiveList = ({ title, userName, content }) => {
     }
 
     return <li className="admin-content">
-        <div>
-            신고제목 - {title}
+        <div className="receive-list-container">
+            <div className="receive-list-title">
+                <span>신고제목 - </span>
+                {title}
+            </div>
+            <div className="receive-list-username">
+                <span>신고자 - </span>
+                {userName}
+            </div>
+            <div className="receive-list-content">
+                <span>신고내용 - </span>
+                {content}
+            </div>
         </div>
-        <div>
-            신고자 - {userName}
-        </div>
-        <div>
-            신고내용 - {content}
-        </div>
-        <button onClick={() => handleRemoveReport(title)}>휴지통</button>
+        <button className="receive-list-remove" onClick={() => handleRemoveReport(title)}>삭제</button>
     </li>;
 };
 
