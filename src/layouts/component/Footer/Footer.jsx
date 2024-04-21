@@ -21,42 +21,7 @@ const Footer = () => {
         </div>
         
         <div className='links'>
-            <div>
-                <ul>
-                    <div>We are..</div>
-                    <li>Home</li>
-                    <li>Information</li>
-                    <li>Contact</li>
-                    <li>Our Team</li>
-                </ul>
-                <ul>
-                    <div>Products</div>
-                    <li>JavaScript</li>
-                    <li>React</li>
-                    <li>React-Router</li>
-                    <li>React-Select</li>
-
-                </ul>
-            </div>
-            <div>
-                <ul>
-                    <div>We are..</div>
-                    <li>Home</li>
-                    <li>Information</li>
-                    <li>Contact</li>
-                    <li>Our Team</li>
-                </ul>
-                <ul>
-                    <div>Products</div>
-                    <li>JavaScript</li>
-                    <li>React</li>
-                    <li>React-Router</li>
-                    <li>React-Select</li>
-    
-                </ul>
-            </div>
-
-            {/* <ul>
+            <ul>
                 <div>We are..</div>
                 <li>Home</li>
                 <li>Information</li>
@@ -85,7 +50,7 @@ const Footer = () => {
                     <Link to='/admin'>Admin</Link>
                 </li>
                 <li>Info</li>
-            </ul> */}
+            </ul>
 
         </div>
 

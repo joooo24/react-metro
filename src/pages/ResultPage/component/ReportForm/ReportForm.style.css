@@ -16,7 +16,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0 auto;
+    padding: 150px 0 80px;
+    margin: 100px auto;
     font-family: "Noto Sans KR", sans-serif;
     animation: fadeIn 1s ease-out;
 }
@@ -77,4 +78,35 @@
 .report-form button:hover {
     color: #fff;
     background-color: #23286b; /* 버튼 호버 시 색상 변경 */
+}
+
+@media screen and (max-width: 768px) {
+    .report-form-wrapper {
+        height: 100%;
+        flex-direction: column;
+        margin: 50px 0;
+        padding: 0;
+        gap: 30px;
+    }
+    .report-form-sorry {
+        width: 320px;
+    }
+    .report-form-sorry img {
+        width: 120px;
+    }
+    .report-form-sorry p {
+        font-size: 18px;
+        line-height: 25px;
+    }
+    .report-form {
+        width: 90%;
+        height: 100%;
+    }
+    .report-form > div {
+        width: 90%;
+    }
+    .report-form input[type="text"],
+    .report-form textarea {
+        width: 100%;
+    }
 }

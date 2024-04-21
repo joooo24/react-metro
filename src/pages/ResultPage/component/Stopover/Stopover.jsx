@@ -11,6 +11,7 @@ const Stopover = ({
     allStopList,
     updatedStopTimeList,
 }) => {
+    const [showStopover, setShowStopover] = useState(false);
     const [transferStation, setTransferStation] = useState(null);
     const [stopoverStations, setStopoverStations] = useState([]);
     const navigate = useNavigate();
@@ -23,6 +24,14 @@ const Stopover = ({
         allStopList,
         updatedStopTimeList
     );
+
+    if (!allStopList && !updatedStopTimeList) {
+        return <div>데이터를 로딩 중입니다...</div>;
+    }
+
+    const toggleStopover = () => {
+        setShowStopover(!showStopover);
+    };
 
     const goToDetailStation = (stationNM) => {
         navigate(`/station-detail?q=${stationNM}`);
@@ -47,11 +56,11 @@ const Stopover = ({
                 <h3 onClick={() => goToDetailStation(depart)}>{depart}역</h3>
             </div>
             {/* 환승역 정보 */}
-            {transferStation && departLine !== arriveLine && (
+            {/* {departLine !== arriveLine && (
                 <div className="transfer-station">
                     <h3>
                         <b className={getLineClass(departLine)}>
-                            {transferStation}
+                            {filteredStations[0]?.STATN_NM}
                         </b>
                         에서{" "}
                         <b className={getLineClass(arriveLine)}>
@@ -60,33 +69,45 @@ const Stopover = ({
                         으로 환승하세요.
                     </h3>
                 </div>
-            )}
+            )} */}
             {/* 경유지 및 환승역 정보 */}
             <div className="stopover-over-station">
                 <span></span>
-                <span>
-                    {allStopList && allStopList.length > 0 ? (
-                        allStopList.slice(1, -1).map((station, idx) => (
-                            <div
-                                className={`over-station ${getLineClass(
-                                    station.LINE
-                                )}`}
-                                key={idx}
-                            >
-                                <h3
-                                    onClick={() =>
-                                        goToDetailStation(station.STATN_NM)
-                                    }
-                                >
-                                    {station.STATN_NM}
-                                </h3>
-                                <h2>{station.MNT}</h2>
-                            </div>
-                        ))
+                <div onClick={toggleStopover}>
+                    {showStopover ? (
+                        <span className="stopover-main">
+                            {allStopList && allStopList.length > 0 ? (
+                                allStopList
+                                    .slice(1)
+                                    .filter((station) => station.MNT !== "0:00") // MNT가 "0:00"이 아닌 항목만 필터링
+                                    .map((station, idx) => (
+                                        <div
+                                            className={`over-station ${getLineClass(
+                                                station.LINE
+                                            )}`}
+                                            key={idx}
+                                        >
+                                            <h3
+                                                onClick={() =>
+                                                    goToDetailStation(
+                                                        station.STATN_NM
+                                                    )
+                                                }
+                                            >
+                                                {station.STATN_NM}
+                                            </h3>
+                                        </div>
+                                    ))
+                            ) : (
+                                <p>경유지 정보를 가져올 수 없습니다.</p>
+                            )}
+                        </span>
                     ) : (
-                        <p>경유지 정보를 가져올 수 없습니다.</p>
+                        <p className="stopover-btn">
+                            {allStopList.length - 1}개의 역 ▷
+                        </p>
                     )}
-                </span>
+                </div>
             </div>
             {/* 도착역 정보 */}
             <div className={`stopover-end-station ${getLineClass(arriveLine)}`}>
