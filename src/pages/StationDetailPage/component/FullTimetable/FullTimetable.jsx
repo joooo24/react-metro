@@ -29,9 +29,9 @@ const FullTimetable = () => {
       selectedStations?.push(station);
     }
   });
-  console.log(selectedStations);
+  // console.log(selectedStations);
 
-  const stationId = selectedStations?.filter((item) => queryValue === item.STATION_NM).map((item) => item.STATION_CD);
+  const stationId = selectedStations?.filter((item) => queryValue === item.STATION_NM)?.map((item) => item.STATION_CD);
   // console.log('station', stationId);
 
   const { data: fullTimeData1, isLoading1, isError1, error1 } = useStationFullTimeQuery({ startIdx: 1, endIdx: 500, stationCd: stationId?.[0] || stationId?.[1], week: week, inout: 1 });
@@ -106,7 +106,7 @@ const FullTimetable = () => {
             >
               <MdNavigateBefore />
             </button>
-            {fullTimeData1 && fullTimeData1[0]?.STATION_NM ? (
+            {fullTimeData1?.[0] && fullTimeData2?.[0] && fullTimeData1 && fullTimeData1[0]?.STATION_NM ? (
               <>
                 <div className='full-timetable-title'>
                   {fullTimeData1[0]?.STATION_NM}역 {fullTimeData1[0]?.LINE_NUM}
@@ -128,7 +128,7 @@ const FullTimetable = () => {
                         <tr key={index}>
                           <td>{item.ARRIVETIME?.slice(0, 5)}</td>
                           <td>
-                            {fullTimeData2[index]?.ARRIVETIME?.slice(0, 5)}
+                            {fullTimeData2 && fullTimeData2[index]?.ARRIVETIME?.slice(0, 5)}
                           </td>
                         </tr>
                       ))}
