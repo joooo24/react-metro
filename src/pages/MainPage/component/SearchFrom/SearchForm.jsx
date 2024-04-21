@@ -62,7 +62,7 @@ const SearchForm = () => {
     const uniqueStationNames = [
         ...new Set(stationName?.map((station) => station.STATN_NM)),
     ];
-    console.log("unipque", uniqueStationNames);
+    // console.log("unipque", uniqueStationNames);
 
     const stationNameInfo = uniqueStationNames?.map((station) => ({
         label: station,

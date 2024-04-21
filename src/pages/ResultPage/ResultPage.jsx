@@ -35,8 +35,10 @@ const ResultPage = () => {
     const [query, setQuery] = useSearchParams()
     const departStatnNm = query.get("depart").replace(/역$/, '');
     const arriveStatnNm = query.get("arrive").replace(/역$/, '');
-    const departLine = query.get("departLine").replace(/호선$/, '');
-    const arriveLine = query.get("arriveLine").replace(/호선$/, '');
+    const departLine = query.get("departLine").replace(/^0+|호선$/g, '');
+    const arriveLine = query.get("arriveLine").replace(/^0+|호선$/g, '');
+
+    // console.log("arriveLine", arriveLine)
 
     const [statnLat, setStatnLat] = useState()
     const [statnLng, setStatnLng] = useState()
@@ -46,12 +48,12 @@ const ResultPage = () => {
     //실시간 도착 
     const { data: ArrivalList, isLoading, isError, error } =
         useRealtimePositionQuery({ startIdx, endIdx, statnNm: departStatnNm })
-    // console.log("arivalList", ArrivalList)
+    console.log("arivalList", ArrivalList)
     //역간 거리정보 (출발호선, 도착호선)
     const { data: departLineStatnList } = useStationReqreTimeQuery({ startIdx, endIdx, lineNm: departLine })
     const { data: arriveLineStatnList } = useStationReqreTimeQuery({ startIdx, endIdx, lineNm: arriveLine })
-    // console.log("ddd", departLineStatnList)
-    // console.log("aaa", arriveLineStatnList)
+    console.log("ddd", departLineStatnList)
+    console.log("aaa", arriveLineStatnList)
 
     if (departLine == arriveLine && statnPosDB) {
         let startIndex = departLineStatnList?.findIndex(station => station.STATN_NM.includes(departStatnNm))
