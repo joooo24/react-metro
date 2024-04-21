@@ -23,7 +23,7 @@ const Header = () => {
         endIdx: 784,
     });
 
-    console.log(stationName);
+    // console.log(stationName);
 
     // ---------- 드롭다운 스타일 ----------
     const customStyles = {
@@ -148,8 +148,8 @@ const Header = () => {
         }
     };
 
-    const [showFavoriteList, setShowFavoriteList ] = useState(false);
-    console.log("showFavoriteList",showFavoriteList)
+    const [showFavoriteList, setShowFavoriteList] = useState(false);
+    console.log("showFavoriteList", showFavoriteList)
 
     return (
         <div className="header">
@@ -273,11 +273,11 @@ const Header = () => {
                 </div>
             </header>
             {showFavoriteList ? (
-               
+
                 <div className="favorite-list-modal">
                     <div className="favorite-list-inner">
-                    <MdClose className="btn-close" onClick={() => setShowFavoriteList(false)}/>
-                    <FavoriteStationList />
+                        <MdClose className="btn-close" onClick={() => setShowFavoriteList(false)} />
+                        <FavoriteStationList />
                     </div>
                 </div>
             ) : null}
