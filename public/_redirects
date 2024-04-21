@@ -1,3 +1,4 @@
 /api/openapi/* http://openapi.seoul.go.kr:8088/:splat 200
 /api/swopenapi/* http://swopenAPI.seoul.go.kr/:splat 200
+/api/swopenAPI/* http://swopenAPI.seoul.go.kr/:splat 200
 /api/myjsonserver/* http://my-json-server.typicode.com/joooo24/metro-db/stations/:splat 200
