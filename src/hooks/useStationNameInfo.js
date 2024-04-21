@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { api_name_info } from "../utils/api";
 
-const fetchStationNameInfo= ({ startIdx, endIdx, lineNm }) => {
+const fetchStationNameInfo = ({ startIdx, endIdx, lineNm }) => {
     return api_name_info.get(`SearchInfoBySubwayNameService/${startIdx}/${endIdx}`)
 }
 
@@ -11,5 +11,6 @@ export const useStationNameInfoQuery = ({ startIdx, endIdx }) => {
         queryKey: ['station-name', { startIdx, endIdx }],
         queryFn: () => fetchStationNameInfo({ startIdx, endIdx }),
         select: (result) => result.data.SearchInfoBySubwayNameService.row,
+        staleTime: 600000,
     })
 }

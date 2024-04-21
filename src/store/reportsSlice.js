@@ -14,9 +14,14 @@ const reportsSlice = createSlice({
                 userName: action.payload.userName,
                 content: action.payload.content
             })
+        },
+        removeFromReports: (state, action) => {
+            state.reports = state.reports.filter(
+                (report) => report.title !== action.payload
+            )
         }
     }
 })
 
-export const { addToReports } = reportsSlice.actions
+export const { addToReports, removeFromReports } = reportsSlice.actions
 export default reportsSlice.reducer
