@@ -1,1 +1,5 @@
 /* /index.html 200
+/api/* http://openapi.seoul.go.kr:8088/${API_KEY}/json/:splat 200
+/api/* http://swopenAPI.seoul.go.kr/api/subway/${API_KEY}/json/:splat 200
+/api/* http://openapi.seoul.go.kr:8088/${API_KEY}/json/:splat 200
+/api/* http://my-json-server.typicode.com/joooo24/metro-db/stations/:splat 200
