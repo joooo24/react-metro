@@ -3,6 +3,8 @@ button {
     border: none;
     font-weight: 700;
     color: #909090;
+    text-decoration: none !important;
+    border-bottom: none;
 }
 
 button:hover {
@@ -32,11 +34,9 @@ button:hover {
 }
 
 .content {
-    /* z-index: 1; */
     background-color: #ffffff;
     width: 30%;
     height: 70%;
-    /* overflow-y: auto; */
 }
 
 .full-timetable-title {
@@ -55,7 +55,6 @@ button:hover {
     align-items: center;
     background-color: #ebebeb;
     border-bottom: 1px solid #909090;
-
 }
 
 .full-timetable-date div {
@@ -90,6 +89,7 @@ table thead, table tbody tr {
     height: auto;
     text-align: center;
 }
+
 tbody {
     display: block;
     width: 100%;
@@ -121,5 +121,41 @@ tbody {
     display: inline-block;
     font-weight: 700;
     color: rgb(183, 0, 0);
+}
 
+@media screen and (max-width: 768px) {
+    .full-timetable-title {
+        font-size: 20px;
+        padding-bottom: 10px;
+    }
+
+    .full-timetable-date {
+        padding: 10px;
+        font-size: 12px;
+    }
+
+    .content {
+        position: absolute;
+        background-color: #ffffff;
+        width: 60%;
+        max-height: 70%;
+    }
+
+    tbody {
+        max-height: 320px !important;
+        flex-grow: 1;
+        overflow-y: scroll;
+    }
+
+    th {
+        font-size: 10px !important;
+    }
+
+    td {
+        padding: 10px !important;
+    }
+
+    table {
+        font-size: 10px !important;
+    }
 }
