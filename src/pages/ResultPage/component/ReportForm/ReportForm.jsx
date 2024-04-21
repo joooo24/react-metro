@@ -2,8 +2,11 @@ import { useState } from "react";
 import "./ReportForm.style.css";
 import sorry from "../../../../assets/images/sorry.png";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addToReports } from "../../../../store/reportsSlice";
 
 const ReportForm = () => {
+    const dispatch = useDispatch()
     const navigate = useNavigate();
     const [title, setTitle] = useState("");
     const [userName, setUserName] = useState("");
@@ -11,6 +14,12 @@ const ReportForm = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
+        const reportData = {
+            title: title,
+            userName: userName,
+            content: content,
+        }
+        dispatch(addToReports(reportData))
         console.log("Submitted Title: ", title);
         console.log("Submitted Content: ", content);
         // 실제 신고 처리 로직을 추가할 수 있습니다.

@@ -16,16 +16,16 @@ const StationDetailPage = () => {
     const [query, setQuery] = useSearchParams();
     const currentStation = query.get("q");
 
-    const kakaoStatnNm = currentStation.replace(/역$/, '');
+    let kakaoStatnNm = currentStation.replace(/역$/, '');
     const [statnLat, setStatnLat] = useState()
     const [statnLng, setStatnLng] = useState()
-    const { data: statnPosDB } = useStationPositionQuery()
+    const { data: statnPosDB, isLoading: DBLoading, isError: DBisError, error: DBError } = useStationPositionQuery()
 
     useEffect(() => {
         const statnPosition = statnPosDB?.find(station => station.StatnNm === kakaoStatnNm)
         setStatnLat(statnPosition?.lat)
         setStatnLng(statnPosition?.lng)
-    }, [statnPosDB])
+    }, [statnPosDB, kakaoStatnNm])
 
 
     const [realtimeStation, setRealtimeStation] = useState();
