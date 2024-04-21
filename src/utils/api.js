@@ -19,5 +19,5 @@ export const api_name_info = axios.create({
 
 export const api_map_position = axios.create({
     // baseURL: `http://localhost:5000/stations/`
-    baseURL: `http://my-json-server.typicode.com/joooo24/metro-db/stations/`
+    REACT_APP_BACKEND_PROXY: `http://my-json-server.typicode.com/joooo24/metro-db/stations/`
 })
