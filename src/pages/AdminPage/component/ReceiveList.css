@@ -9,7 +9,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: flex-start;
-    gap: 20px;
+    gap: 15px;
     padding: 5px;
     max-height: 200px;
     overflow: auto;
@@ -41,4 +41,20 @@
 .receive-list-remove:hover {
     color: #fff;
     background-color: #23286b;
+}
+
+.receive-list-username {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    font-weight: normal;
+}
+.receive-list-content {
+    width: 100%;
+    padding: 10px 0;
+    border-top: 1px dotted #000;
+}
+.receive-list-content > span {
+    margin-top: 10px;
 }

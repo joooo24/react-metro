@@ -50,36 +50,36 @@
 }
 
 /* 점선 */
-.stopover-over-station span:nth-child(1) {
+.stopover-over-station > span {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 175px;
+    width: 75px;
     height: 180px;
     border-right: 5px dotted #909090;
     margin-right: 30px;
 }
 /* 경유지 내용 */
-.stopover-over-station span:nth-child(2) {
+.stopover-over-station .stopover-main {
     display: flex;
     gap: 15px;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    width: 1000px;
+    width: 300px;
     height: 180px;
     overflow: auto;
 }
-.stopover-over-station span:nth-child(2)::-webkit-scrollbar {
+.stopover-over-station .stopover-main::-webkit-scrollbar {
     width: 5px;
     background: #000;
     height: 100px;
 }
-.stopover-over-station span:nth-child(2)::-webkit-scrollbar-thumb {
+.stopover-over-station .stopover-main::-webkit-scrollbar-thumb {
     background: gray;
 }
-.stopover-over-station span:nth-child(2)::-webkit-scrollbar-track {
+.stopover-over-station .stopover-main::-webkit-scrollbar-track {
     background: gainsboro;
 }
 .over-station {
@@ -88,7 +88,7 @@
 }
 .over-station h3 {
     cursor: pointer;
-    width: 80px;
+    width: 130px;
     transition: all 0.1s;
 }
 .over-station h3:hover {
@@ -114,6 +114,14 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
+}
+.stopover-btn {
+    cursor: pointer;
+    font-size: 20px;
+    transition: all 0.2s;
+}
+.stopover-btn:hover {
+    color: gray;
 }
 
 /* 환승역 */
