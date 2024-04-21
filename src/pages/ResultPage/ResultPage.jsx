@@ -59,18 +59,11 @@ const ResultPage = () => {
     } = useRealtimePositionQuery({ startIdx, endIdx, statnNm: departStatnNm });
     console.log("arivalList", ArrivalList);
     //역간 거리정보 (출발호선, 도착호선)
-    const { data: departLineStatnList } = useStationReqreTimeQuery({
-        startIdx,
-        endIdx,
-        lineNm: departLine,
-    });
-    const { data: arriveLineStatnList } = useStationReqreTimeQuery({
-        startIdx,
-        endIdx,
-        lineNm: arriveLine,
-    });
-    console.log("ddd", departLineStatnList);
-    console.log("aaa", arriveLineStatnList);
+
+    const { data: departLineStatnList } = useStationReqreTimeQuery({ startIdx, endIdx, lineNm: departLine })
+    const { data: arriveLineStatnList } = useStationReqreTimeQuery({ startIdx, endIdx, lineNm: arriveLine })
+    console.log("ddd", departLineStatnList)
+    console.log("aaa", arriveLine, arriveLineStatnList)
 
     if (departLine == arriveLine && statnPosDB) {
         let startIndex = departLineStatnList?.findIndex((station) =>
