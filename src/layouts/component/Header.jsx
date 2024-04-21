@@ -8,9 +8,11 @@ import star from "../../assets/images/star.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { useStationNameInfoQuery } from "../../hooks/useStationNameInfo";
 import FavoriteStationList from "../../common/FavoriteStationList/FavoriteStationList";
+import { useDispatch, useSelector } from "react-redux";
+import { authenticateActions } from "../../store/authenticateReducer";
 import { MdClose } from "react-icons/md";
 
-const Header = ({ auth, setAuth }) => {
+const Header = () => {
     const [istoggle, setToggle] = useState(false);
     const [selectedStation, setSelectedStation] = useState(null);
     const [stationOptions, setStationOptions] = useState([]);
@@ -21,7 +23,7 @@ const Header = ({ auth, setAuth }) => {
         endIdx: 784,
     });
 
-    console.log(stationName);
+    // console.log(stationName);
 
     // ---------- 드롭다운 스타일 ----------
     const customStyles = {
@@ -133,17 +135,21 @@ const Header = ({ auth, setAuth }) => {
     };
 
     //-----------로그인버튼---------------
+    const auth = useSelector(state => state.auth.authenticate);
+    const dispatch = useDispatch();
+
     const goToLoginPage = () => {
         if (auth) {
-            setAuth(false);
+            //setAuth(false);
+            dispatch(authenticateActions.logout());
             navigate("/");
         } else {
             navigate("/login");
         }
     };
 
-    const [showFavoriteList, setShowFavoriteList ] = useState(false);
-    console.log("showFavoriteList",showFavoriteList)
+    const [showFavoriteList, setShowFavoriteList] = useState(false);
+    console.log("showFavoriteList", showFavoriteList)
 
     return (
         <div className="header">
@@ -223,7 +229,7 @@ const Header = ({ auth, setAuth }) => {
                             {/* --------- 로그인 --------- */}
                             <div className="header-login">
                                 <img src={login} alt="login" />
-                                <p>로그인</p>
+                                <p>{auth ? "로그아웃" : "로그인"}</p>
                             </div>
                             {/* --------- 서치바 --------- */}
                             <form
@@ -267,11 +273,11 @@ const Header = ({ auth, setAuth }) => {
                 </div>
             </header>
             {showFavoriteList ? (
-               
+
                 <div className="favorite-list-modal">
                     <div className="favorite-list-inner">
-                    <MdClose className="btn-close" onClick={() => setShowFavoriteList(false)}/>
-                    <FavoriteStationList />
+                        <MdClose className="btn-close" onClick={() => setShowFavoriteList(false)} />
+                        <FavoriteStationList />
                     </div>
                 </div>
             ) : null}
