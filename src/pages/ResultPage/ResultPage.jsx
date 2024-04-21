@@ -44,7 +44,12 @@ const ResultPage = () => {
     const [statnLng, setStatnLng] = useState();
     const [showReport, isShowReport] = useState(false);
 
-    const { data: statnPosDB } = useStationPositionQuery();
+    const {
+        data: statnPosDB,
+        isLoading: DBisLoading,
+        isError: DBisError,
+        error: DBerror,
+    } = useStationPositionQuery();
     //실시간 도착
     const {
         data: ArrivalList,
@@ -187,9 +192,6 @@ const ResultPage = () => {
         );
         setStatnLat(statnPosition?.lat);
         setStatnLng(statnPosition?.lng);
-        if (statnPosition && ArrivalList) {
-            setResultDepartTime(FindDepartTime(ArrivalList));
-        }
     }, [statnPosDB]);
 
     useEffect(() => {
@@ -197,13 +199,34 @@ const ResultPage = () => {
         // setResultArrivalTime(ResultArrivalTime)
     }, [ResultTotalMinutes]);
 
-    const FindDepartTime = (ArrivalList) => {
-        let recptnDt = new Date(ArrivalList[0]?.recptnDt);
-        let barvlDt = parseInt(ArrivalList[0]?.barvlDt);
-        let result = calTime(recptnDt, barvlDt);
-        // console.log("출발시간 결과 : ", result)
-        return result;
-    };
+    // 출발 시간 계산
+    useEffect(() => {
+        if (statnPosDB && ArrivalList) {
+            const FindDepartTime = async () => {
+                let recptnDt = new Date(ArrivalList[0]?.recptnDt);
+                let barvlDt = parseInt(ArrivalList[0]?.barvlDt);
+                let result = await calTime(recptnDt, barvlDt); // calTime가 비동기 함수라면 await 사용
+                return result;
+            };
+
+            FindDepartTime().then((departTime) => {
+                if (departTime) {
+                    setResultDepartTime(departTime);
+                }
+            });
+        }
+    }, [statnPosDB, ArrivalList]);
+
+    // 도착 시간 계산 및 업데이트
+    useEffect(() => {
+        if (resultDepartTime && !isNaN(resultTotalMinutes)) {
+            const arrivalTime = addMinutes(
+                resultDepartTime,
+                resultTotalMinutes
+            );
+            setResultArrivalTime(arrivalTime);
+        }
+    }, [resultDepartTime, resultTotalMinutes]);
 
     // 출발역 출발시간 업데이트 후, reduce로 누적
     if (allStopList) {
@@ -211,8 +234,7 @@ const ResultPage = () => {
             // MNT 값에서 ':'를 기준으로 분할하고 첫 번째 요소(분)를 반환
             return station.MNT.split(":")[0];
         });
-        // console.log("minutes", minutesOnlyList)
-        // console.log("resultDepartTime", resultDepartTime)
+
         updatedStopTimeList = calculateTimes(resultDepartTime, minutesOnlyList);
 
         console.log(updatedStopTimeList);
@@ -222,11 +244,16 @@ const ResultPage = () => {
         isShowReport(!showReport);
     };
 
-    if (isLoading) {
+    if (isLoading && DBisLoading) {
         return <h1>is Loading</h1>;
     }
-    if (isError) {
-        return <div>{error.message}</div>;
+    if (isError && DBisError) {
+        return (
+            <div>
+                {error.message}
+                {DBerror.message}
+            </div>
+        );
     }
 
     return (
@@ -264,24 +291,4 @@ const ResultPage = () => {
     );
 };
 
-// return (
-//     <div className="station-detail-page">
-//         <div className="map-wrap">지도</div>
-//         <div className="station-information">
-//             {/* 역 리스트 */}
-//             <StationList currentStation={currentStation} />
-
-//             {/* 도착정보 */}
-//             <ArrivalInfo currentStation={currentStation} />
-//             <FullTimetable />
-//             <button className="btn-show-station">지하철 노선도 보기</button>
-
-//             {/* 실시간 도착정보 */}
-//             <RealTimeInfo currentStation={currentStation} />
-
-//             {/* 역 주소 */}
-//             <StationAddressInfo currentStation={currentStation} />
-//         </div>
-//     </div>
-// );
 export default ResultPage;

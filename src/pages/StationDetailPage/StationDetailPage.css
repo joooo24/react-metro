@@ -114,7 +114,7 @@
     margin-bottom: 30px;
     border: 1px solid #eaeaea;
     border-radius: 30px;
-    padding: 30px 20%;
+    padding: 30px 10%;
 }
 
 .arr-real-time li {
@@ -124,7 +124,7 @@
 }
 
 .arr-real-time li span {
-    font-size: 20px;
+    font-size: 16px;
 }
 
 .arr-real-time li .tit {
