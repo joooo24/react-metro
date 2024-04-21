@@ -10,7 +10,6 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import AdminPage from "./pages/AdminPage/AdminPage";
 import ReportForm from "./pages/ResultPage/component/ReportForm/ReportForm";
-import PrivateRoute from "./pages/PrivateRoute";
 
 function App() {
     const [auth, setAuth] = useState(false);
@@ -29,10 +28,7 @@ function App() {
                 <Route path="arrival-result" element={<ResultPage />} />
                 <Route path="station-detail" element={<StationDetailPage />} />
                 <Route path="admin" element={<AdminPage />} />
-                <Route
-                    path="incorrectInfo"
-                    element={<PrivateRoute auth={auth} />}
-                />
+                <Route path="incorrectInfo" element={<ReportForm />} />
             </Route>
             <Route path="*" element={<NotFoundPage />} />
         </Routes>

@@ -29,7 +29,7 @@ const Stopover = ({
     };
 
     const showForm = () => {
-        // navigate("/incorrectInfo");
+        navigate("/incorrectInfo");
     };
 
     const getLineClass = (lineNumber) => {
