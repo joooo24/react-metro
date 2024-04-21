@@ -52,3 +52,14 @@
     padding: 20px;
     margin: 0 auto 20px auto;
 }
+
+@media (max-width: 768px) {
+    .admin-contents ul {
+        width: 100%;
+        height: 100%;
+        display: grid;
+        grid-template-columns: repeat(1, 1fr);
+        justify-content: space-between;
+        align-items: center;
+    }
+}
