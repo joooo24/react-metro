@@ -2,7 +2,7 @@ import React from "react";
 //import { useRealtimetotalQuery } from "../../../../hooks/useRealtimePosition";
 
 const RealTimeInfo = ({ realtimeStation }) => {
-    console.log(realtimeStation)
+    console.log()
 
     return (
         <ul className="arr-real-time">
